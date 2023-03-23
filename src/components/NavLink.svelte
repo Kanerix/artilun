@@ -3,20 +3,20 @@
 	import { page } from "$app/stores"
     import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-	export let slug: string;
+	export let href: string;
 	export let icon: IconDefinition; 
 	export let title: string;
 	
-	$: isActive = '/dash/' + slug === $page.url.pathname;
+	$: isActive = href === $page.url.pathname;
 </script>
 
 <a 
-	href="/dash/{slug}"
+	{href}
 	class="flex items-center w-full mb-4"
 >
 	<Fa
 		icon={icon}
-		class={`mr-4 hover text-xs ${isActive ? 'text-red-500' : 'text-slate-300'}`}
+		class={`mr-4 hover text-xs ${isActive ? 'text-red-500' : 'text-slate-400'}`}
 	>
 	</Fa>
 	<p

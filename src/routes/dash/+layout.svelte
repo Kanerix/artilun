@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { LayoutData } from "./$types";
-	import { page } from '$app/stores';
 	import Divider from "../../components/Divider.svelte";
     import NavLink from '../../components/NavLink.svelte';
 
@@ -21,11 +20,9 @@
 			<h6 class="font-semibold text-xs text-slate-500 uppercase my-6">
 				{categoryTitle}
 			</h6>
-			<div>
-				{#each pages as props}
-					<NavLink {...props} />
-				{/each}
-			</div>
+			{#each pages as props}
+				<NavLink {...props} />
+			{/each}
 		{/each}
 	</div>
 </nav>
