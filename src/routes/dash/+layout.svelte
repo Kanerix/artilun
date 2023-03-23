@@ -4,8 +4,6 @@
 	import Divider from "../../components/Divider.svelte";
     import NavLink from '../../components/NavLink.svelte';
 
-	$: isActive = $page.url.pathname === $$props.href
-
 	export let data: LayoutData;
 </script>
 
@@ -23,11 +21,11 @@
 			<h6 class="font-semibold text-xs text-slate-500 uppercase my-6">
 				{categoryTitle}
 			</h6>
-			<ul>
+			<div>
 				{#each pages as props}
 					<NavLink {...props} />
 				{/each}
-			</ul>
+			</div>
 		{/each}
 	</div>
 </nav>

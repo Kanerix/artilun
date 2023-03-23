@@ -6,21 +6,25 @@
 	export let slug: string;
 	export let icon: IconDefinition; 
 	export let title: string;
-
-	$: isActive = $page.url.pathname === $$props.href
+	
+	$: isActive = '/dash/' + slug === $page.url.pathname;
 </script>
 
-<a href="/dash/{slug}" class="flex items-center w-full mb-4">
+<a 
+	href="/dash/{slug}"
+	class="flex items-center w-full mb-4"
+>
 	<Fa
 		icon={icon}
-		class="mr-4 hover {isActive ? 'text-red-500' : 'text-slate-300'} text-xs"
+		class={`mr-4 hover text-xs ${isActive ? 'text-red-500' : 'text-slate-300'}`}
 	>
 	</Fa>
 	<p
 		{...$$props}
-		class="font-semibold text-xs uppercase py-2 mr-4 
-		text-slate-600 hover:text-slate-400 w-full"
-		class:text-red-500="{isActive}"
+		class={
+			`font-semibold text-xs uppercase py-2 mr-4 w-full 
+			${isActive ? 'text-red-500' : 'text-slate-600 hover:text-slate-400'}`
+		}
 	>
 		{title}
 	</p>
