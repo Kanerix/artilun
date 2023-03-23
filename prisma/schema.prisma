@@ -1,0 +1,78 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:dev.db"
+}
+ 
+generator client {
+    provider      = "cargo prisma"
+    output        = "../src/prisma.rs"
+}
+ 
+model User {
+    id          	String  		@id
+    first_name 		String
+	last_name		String
+	email			String			@unique
+	password 		String
+	role			String 			@default("user")
+	createdAt 		DateTime 		@default(now())
+	orginizationId  String
+	originization	Orginization 	@relation(fields: [orginizationId], references: [id])
+	refresh_tokens  RefreshToken[]
+	stands			Stand[]
+}
+
+model RefreshToken {
+	id          String  	@id
+	token       String
+	userId      String
+	user        User 		@relation(fields: [userId], references: [id])
+	expires     DateTime
+	createdAt 	DateTime 	@default(now())
+}
+
+model Orginization {
+    id          	String  	@id
+    displayName 	String
+	email			String
+	domain			String 		@unique
+	createdAt 		DateTime 	@default(now())
+	users			User[]
+	stands			Stand[]
+}
+
+model Stand {
+	id 				String  			@id
+	name        	String
+	createdAt 		DateTime 			@default(now())
+	orginizationId  String
+	orginization    Orginization    	@relation(fields: [orginizationId], references: [id])
+	userId      	String
+	user        	User    			@relation(fields: [userId], references: [id])
+	standTemplates 	StandTemplate[]
+}
+
+model StandTemplate {
+	id 				String  			@id
+	name        	String
+	standId  		String
+	createdAt 		DateTime 			@default(now())
+	stand    		Stand    			@relation(fields: [standId], references: [id])
+	questions 		StandQuestion[]
+}
+
+model StandQuestion {
+	id 					String  			@id
+	question    		String
+	standTemplateId     String
+	standTemplate       StandTemplate   	@relation(fields: [standTemplateId], references: [id])
+	answers     		QuestionAnwser[]
+}
+
+model QuestionAnwser {
+	id 			String  		@id
+	createdAt 	DateTime 		@default(now())
+	answer      Int
+	questionId  String
+	question    StandQuestion 	@relation(fields: [questionId], references: [id])
+}
