@@ -1,5 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faChalkboardTeacher, faHouse, faTable, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faChalkboardTeacher, faHouse, faTable, faUsers } from '@fortawesome/free-solid-svg-icons'
 import type { LayoutLoad } from './$types'
 
 interface Categories {
@@ -20,7 +20,7 @@ export const load = ((): Categories => {
             { href: '/dash/lessons', title: 'Lessons', icon: faChalkboardTeacher }
         ],
         'Orginization': [
-            { href: '/dash/users', title: 'Users', icon: faUser },
+            { href: '/dash/users', title: 'Users', icon: faUsers },
         ]
     }
 }) satisfies LayoutLoad

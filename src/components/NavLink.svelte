@@ -17,8 +17,7 @@
 	<Fa
 		icon={icon}
 		class={`mr-4 hover text-xs ${isActive ? 'text-red-500' : 'text-slate-400'}`}
-	>
-	</Fa>
+	/>
 	<p
 		{...$$props}
 		class={
