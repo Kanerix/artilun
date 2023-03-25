@@ -1,2 +1,4 @@
 .eslintrc.cjs
 .gitignore
+postgres
+prisma/migrate

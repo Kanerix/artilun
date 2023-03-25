@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Paper from '../../../components/Paper.svelte';
+    import Paper from '../../../components/Paper.svelte'
 </script>
 
 <div class="lg:col-span-3 sm:col-span-6 col-span-12">

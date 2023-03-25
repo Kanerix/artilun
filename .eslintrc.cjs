@@ -58,6 +58,16 @@ module.exports = {
                 'properties': 'always'
             }
         ],
+        'svelte/html-quotes': [
+            'error',
+            {
+                'prefer': 'double', // or "single"
+                'dynamic': {
+                    'quoted': false,
+                    'avoidInvalidUnquotedInHTML': false
+                }
+            }
+        ],
     },
     'overrides': [
         {

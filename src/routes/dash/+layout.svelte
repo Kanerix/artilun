@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Fa from "svelte-fa";
+	import Fa from 'svelte-fa'
 	import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
-	import type { LayoutData } from "./$types";
-	import Divider from "../../components/Divider.svelte";
-    import NavLink from '../../components/NavLink.svelte';
+	import type { LayoutData } from './$types'
+	import Divider from '../../components/Divider.svelte'
+    import NavLink from '../../components/NavLink.svelte'
 
-	export let data: LayoutData;
+	export let data: LayoutData
 
 	$: isSidebarOpen = false
 </script>
@@ -25,7 +25,7 @@
 				{categoryTitle}
 			</h6>
 			{#each pages as props}
-				<NavLink {...props} {isSidebarOpen} />
+				<NavLink {...props} />
 			{/each}
 		{/each}
 	</div>

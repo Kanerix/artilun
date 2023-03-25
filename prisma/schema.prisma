@@ -7,83 +7,99 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+	USER
+  	ADMIN
+	OWNER
+}
+
 model User {
-    id          	String  		@id
-    first_name 		String
-	last_name		String
+	id				Int  			@id @default(autoincrement())
+    firstName 		String
+	lastName		String
 	email			String			@unique
 	password 		String
-	role			String 			@default("user")
-	createdAt 		DateTime 		@default(now())
-	orginizationId  String
-	originization	Orginization 	@relation(fields: [orginizationId], references: [id])
-	refresh_tokens  RefreshToken[]
+	role			Role? 			@default(USER)
+	createdAt 		DateTime? 		@default(now())
+	orginizationId  Int?
+	originization	Orginization? 	@relation(fields: [orginizationId], references: [id])
+	strandTemplates StandTemplate[]
+	refreshTokens  	RefreshToken[]
 	stands			Stand[]
 	lessons			Lesson[]
 }
 
 model RefreshToken {
-	id          String  	@id
+	id 			Int  		@id @default(autoincrement())
 	token       String
-	userId      String
+	userId      Int
 	user        User 		@relation(fields: [userId], references: [id])
 	expires     DateTime
 	createdAt 	DateTime 	@default(now())
 }
 
 model Orginization {
-    id          	String  	@id
-    displayName 	String
-	email			String
-	domain			String 		@unique
+	id 				Int  		@id @default(autoincrement())
+    name			String
 	createdAt 		DateTime 	@default(now())
 	users			User[]
 	stands			Stand[]
+	subjects		Subject[]
 }
 
-model Lesson {
-	id 				String  		@id
-	name        	String
-	createdAt 		DateTime 		@default(now())
-	userId  		String
-	user   			User    		@relation(fields: [userId], references: [id])
-	standTemplateId String
-	standTemplates 	StandTemplate	@relation(fields: [standTemplateId], references: [id])
-}
-
-model Stand {
-	id 				String  			@id
-	name        	String
-	createdAt 		DateTime 			@default(now())
-	orginizationId  String
-	orginization    Orginization    	@relation(fields: [orginizationId], references: [id])
-	userId      	String
-	user        	User    			@relation(fields: [userId], references: [id])
+model Subject {
+	id 				Int  		@id @default(autoincrement())
+	name			String
+	createdAt 		DateTime 	@default(now())
+	orginizationId  Int
+	orginization	Orginization @relation(fields: [orginizationId], references: [id])
 	standTemplates 	StandTemplate[]
-}
-
-model StandTemplate {
-	id 				String  			@id
-	name        	String
-	standId  		String
-	createdAt 		DateTime 			@default(now())
-	stand    		Stand    			@relation(fields: [standId], references: [id])
-	questions 		StandQuestion[]
 	lessons			Lesson[]
 }
 
+model Lesson {
+	id 				Int  			@id @default(autoincrement())
+	name        	String
+	createdAt 		DateTime 		@default(now())
+	userId  		Int
+	user   			User    		@relation(fields: [userId], references: [id])
+	subjectId		Int			
+	subject 		Subject			@relation(fields: [subjectId], references: [id])
+}
+
+model Stand {
+	id 				Int  				@id @default(autoincrement()) 
+	name        	String
+	createdAt 		DateTime 			@default(now())
+	orginizationId  Int
+	orginization    Orginization    	@relation(fields: [orginizationId], references: [id])
+	userId      	Int
+	user        	User    			@relation(fields: [userId], references: [id])
+}
+
+model StandTemplate {
+	id 				Int  				@id @default(autoincrement())
+	name        	String
+	createdAt 		DateTime 			@default(now())
+	userId  		Int
+	user    		User    			@relation(fields: [userId], references: [id])
+	questions 		StandQuestion[]
+	subjectId		Int
+	subject			Subject				@relation(fields: [subjectId], references: [id])
+}
+
 model StandQuestion {
-	id 					String  			@id
+	id 					Int  			@id @default(autoincrement())
 	question    		String
-	standTemplateId     String
+	standTemplateId     Int
 	standTemplate       StandTemplate   	@relation(fields: [standTemplateId], references: [id])
 	answers     		QuestionAnwser[]
 }
 
 model QuestionAnwser {
-	id 			String  		@id
+	id 			Int  		@id @default(autoincrement())
 	createdAt 	DateTime 		@default(now())
 	answer      Int
-	questionId  String
+	questionId  Int
 	question    StandQuestion 	@relation(fields: [questionId], references: [id])
 }

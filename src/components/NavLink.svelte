@@ -1,13 +1,13 @@
 <script lang="ts">
-	import Fa from "svelte-fa";
-	import { page } from "$app/stores"
-    import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+	import Fa from 'svelte-fa'
+	import { page } from '$app/stores'
+    import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-	export let href: string;
-	export let icon: IconDefinition; 
-	export let title: string;
+	export let href: string
+	export let icon: IconDefinition 
+	export let title: string
 	
-	$: isActive = href === $page.url.pathname;
+	$: isActive = href === $page.url.pathname
 </script>
 
 <a 
@@ -16,14 +16,11 @@
 >
 	<Fa
 		icon={icon}
-		class={`mr-4 hover text-xs ${isActive ? 'text-red-500' : 'text-slate-400'}`}
+		class="mr-4 hover text-xs {isActive ? 'text-red-500' : 'text-slate-400'}"
 	/>
 	<p
-		{...$$props}
-		class={
-			`font-semibold text-xs uppercase py-2 mr-4 w-full 
-			${isActive ? 'text-red-500' : 'text-slate-600 hover:text-slate-400'}`
-		}
+		class="font-semibold text-xs uppercase py-2 mr-4 w-full 
+		{isActive ? 'text-red-500' : 'text-slate-600 hover:text-slate-400'}"
 	>
 		{title}
 	</p>
