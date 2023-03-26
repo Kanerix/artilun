@@ -1,35 +1,34 @@
 import { redirect, type Handle } from '@sveltejs/kit'
 import jwt from 'jsonwebtoken'
 import { Role } from '@prisma/client'
-import { generateToken, verifyToken, type CustomUserJwtPayload } from '$lib/server/auth'
+import { generateToken, verifyToken } from '$lib/server/auth'
 import prisma from '$lib/server/prisma'
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const accessToken = event.cookies.get('access_token')
 	const refreshToken = event.cookies.get('refresh_token')
-	if (accessToken) {
-		try {
-			event.locals.user = verifyToken(accessToken)	
-		} catch (e) {
-			if (e instanceof jwt.TokenExpiredError) {
-				if (refreshToken) {
-					const decodedToken = <CustomUserJwtPayload>jwt.decode(accessToken)
-					const dbToken = await prisma.refreshToken.findFirst({
-						where: {
-							token: refreshToken,
-							userId: decodedToken.userId
-						},
-						select: {
-							expiresAt: true,
-							user: true,
-						}
-					})
 
-					if (dbToken && dbToken.expiresAt < new Date()) {
-						const newAccessToken = generateToken(dbToken.user)
-						event.cookies.set('access_token', newAccessToken)
-						event.locals.user = verifyToken(newAccessToken)
-					}
+	try {
+		if (accessToken) {
+			event.locals.user = verifyToken(accessToken)	
+		}
+	} catch (e) {
+		if (e instanceof jwt.TokenExpiredError) {
+			if (refreshToken) {
+				const databaseRefreshToken = await prisma.refreshToken.findFirst({
+					where: {
+						token: refreshToken,
+					},
+					select: {
+						expiresAt: true,
+						user: true
+					},
+				})
+
+				if (databaseRefreshToken && databaseRefreshToken.expiresAt < new Date()) {
+					const newAccessToken = await generateToken(databaseRefreshToken.user)
+					event.cookies.set('access_token', newAccessToken)
+					event.locals.user = verifyToken(newAccessToken)
 				}
 			}
 		}
@@ -53,8 +52,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			throw redirect(303, '/dash/general/hom')
 		}
 	}
-
-	console.log('test')
 
 	const response = await resolve(event)
 	return response

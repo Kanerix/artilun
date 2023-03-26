@@ -1,31 +1,63 @@
 import jwt from 'jsonwebtoken'
 import { env } from '$lib/server/env'
-import type { User } from '@prisma/client'
+import type { Role, User } from '@prisma/client'
+import prisma from './prisma'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
-	userId: number
+	id: number
 	firstName: string
 	lastName: string
-	orginization: {
+	orginization?: {
 		id: number,
 		name: string,
+		user: {
+			id: number,
+			role: Role
+		}
 	} 
 }
 
-export function generateToken(user: User) {
-	return jwt.sign({
+export async function generateToken(user: User) {
+	const payload = <CustomUserJwtPayload> {
 		id: user.id,
 		firstName: user.firstName,
-		lsatName: user.lastName,
-	},
-	env.JWT_SECRET,
-	{
-		expiresIn: '15m'
+		lastName: user.lastName,
+	}
+
+	const orginizationUser = await prisma.orginizationUser.findUnique({
+		where: {
+			userId: user.id
+		},
+		select: {
+			id: true,
+			role: true,
+			orginization: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		}
 	})
+
+	if (orginizationUser) {
+		payload.orginization = {
+			id: orginizationUser.orginization.id,
+			name: orginizationUser.orginization.name,
+			user: {
+				id: orginizationUser.id,
+				role: orginizationUser.role
+			}
+		}
+	}
+
+	return jwt.sign(payload, env.JWT_SECRET, { expiresIn: '15m' })
 }
 
 export function verifyToken(token: string) {
-	return <CustomUserJwtPayload>jwt.verify(token, env.JWT_SECRET)
+	return <CustomUserJwtPayload>jwt.verify(token, env.JWT_SECRET, {
+		algorithms: ['HS256']
+	})
 }
 
 export function decodeToken(token: string) {

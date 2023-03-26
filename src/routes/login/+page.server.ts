@@ -24,19 +24,14 @@ export const actions = {
 			})
 		}
 
-		let user: (User & {
-			orginizationUser: OrginizationUser | null;
-		}) | null = null
+		let user: User | null
 
 		try {
 			user = await prisma.user.findUnique({
 				where: {
 					email: result.data.email
-				},
-				include: {
-					orginizationUser: true
 				}
-			})		
+			})
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				return fail(409, {
@@ -62,11 +57,11 @@ export const actions = {
 			})
 		}
 
-		const accessToken = generateToken(user)
+		const accessToken = await generateToken(user)
 		const refreshToken = Math.random().toString(36).substring(2, 500) + Math.random().toString(36).substring(2, 500)
 
 		try {
-			prisma.refreshToken.create({
+			await prisma.refreshToken.create({
 				data: {
 					token: refreshToken,
 					userId: user.id,
