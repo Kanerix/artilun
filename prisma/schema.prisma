@@ -11,22 +11,22 @@ enum Role {
 	USER
   	ADMIN
 	OWNER
+	MANAGER
 }
 
 model User {
-	id				Int  			@id @default(autoincrement())
-    firstName 		String
-	lastName		String
-	email			String			@unique
-	password 		String
-	role			Role? 			@default(USER)
-	createdAt 		DateTime? 		@default(now())
-	orginizationId  Int?
-	originization	Orginization? 	@relation(fields: [orginizationId], references: [id])
-	strandTemplates StandTemplate[]
-	refreshTokens  	RefreshToken[]
-	stands			Stand[]
-	lessons			Lesson[]
+	id					Int  				@id @default(autoincrement())
+    firstName 			String
+	lastName			String
+	email				String				@unique
+	password 			String
+	createdAt 			DateTime 			@default(now())
+	updatedAt 			DateTime 			@default(now()) @updatedAt
+	orginizationUser	OrginizationUser?	
+	strandTemplates 	StandTemplate[]
+	refreshTokens  		RefreshToken[]
+	stands				Stand[]
+	lessons				Lesson[]
 }
 
 model RefreshToken {
@@ -34,25 +34,39 @@ model RefreshToken {
 	token       String
 	userId      Int
 	user        User 		@relation(fields: [userId], references: [id])
-	expires     DateTime
+	expiresAt   DateTime
 	createdAt 	DateTime 	@default(now())
+	updatedAt 	DateTime 	@default(now()) @updatedAt
 }
 
 model Orginization {
-	id 				Int  		@id @default(autoincrement())
+	id 				Int  				@id @default(autoincrement())
     name			String
-	createdAt 		DateTime 	@default(now())
-	users			User[]
+	createdAt 		DateTime 			@default(now())
+	updatedAt 		DateTime 			@default(now()) @updatedAt
+	users			OrginizationUser[]
 	stands			Stand[]
 	subjects		Subject[]
 }
 
-model Subject {
-	id 				Int  		@id @default(autoincrement())
-	name			String
-	createdAt 		DateTime 	@default(now())
+model OrginizationUser {
+	id 				Int  			@id @default(autoincrement())
+	role			Role 			@default(USER)
+	createdAt 		DateTime 		@default(now())
+	updatedAt 		DateTime 		@default(now()) @updatedAt
+	userId			Int				@unique
+	user			User			@relation(fields: [userId], references: [id])
 	orginizationId  Int
-	orginization	Orginization @relation(fields: [orginizationId], references: [id])
+	orginization	Orginization	@relation(fields: [orginizationId], references: [id])
+}
+
+model Subject {
+	id 				Int  			@id @default(autoincrement())
+	name			String
+	createdAt 		DateTime 		@default(now())
+	updatedAt 		DateTime 		@default(now()) @updatedAt
+	orginizationId  Int
+	orginization	Orginization 	@relation(fields: [orginizationId], references: [id])
 	standTemplates 	StandTemplate[]
 	lessons			Lesson[]
 }
@@ -61,6 +75,7 @@ model Lesson {
 	id 				Int  			@id @default(autoincrement())
 	name        	String
 	createdAt 		DateTime 		@default(now())
+	updatedAt 		DateTime 		@default(now()) @updatedAt
 	userId  		Int
 	user   			User    		@relation(fields: [userId], references: [id])
 	subjectId		Int			
@@ -68,38 +83,43 @@ model Lesson {
 }
 
 model Stand {
-	id 				Int  				@id @default(autoincrement()) 
+	id 				Int  			@id @default(autoincrement()) 
 	name        	String
-	createdAt 		DateTime 			@default(now())
+	createdAt 		DateTime 		@default(now())
+	updatedAt 		DateTime 		@default(now()) @updatedAt
 	orginizationId  Int
-	orginization    Orginization    	@relation(fields: [orginizationId], references: [id])
+	orginization    Orginization    @relation(fields: [orginizationId], references: [id])
 	userId      	Int
-	user        	User    			@relation(fields: [userId], references: [id])
+	user        	User    		@relation(fields: [userId], references: [id])
 }
 
 model StandTemplate {
 	id 				Int  				@id @default(autoincrement())
 	name        	String
 	createdAt 		DateTime 			@default(now())
+	updatedAt 		DateTime 			@default(now()) @updatedAt
 	userId  		Int
 	user    		User    			@relation(fields: [userId], references: [id])
-	questions 		StandQuestion[]
 	subjectId		Int
 	subject			Subject				@relation(fields: [subjectId], references: [id])
+	questions 		StandQuestion[]
 }
 
 model StandQuestion {
-	id 					Int  			@id @default(autoincrement())
+	id 					Int  				@id @default(autoincrement())
 	question    		String
+	createdAt 			DateTime 			@default(now())
+	updatedAt 			DateTime 			@default(now()) @updatedAt
 	standTemplateId     Int
 	standTemplate       StandTemplate   	@relation(fields: [standTemplateId], references: [id])
 	answers     		QuestionAnwser[]
 }
 
 model QuestionAnwser {
-	id 			Int  		@id @default(autoincrement())
-	createdAt 	DateTime 		@default(now())
+	id 			Int  			@id @default(autoincrement())
 	answer      Int
+	createdAt 	DateTime 		@default(now())
+	updatedAt 	DateTime 		@default(now()) @updatedAt
 	questionId  Int
 	question    StandQuestion 	@relation(fields: [questionId], references: [id])
 }

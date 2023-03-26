@@ -1,13 +1,14 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import type { CustomUserJwtPayload } from '$lib/server/auth'
 
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			user?: CustomUserJwtPayload
+		}
 		// interface PageData {}
 		// interface Platform {}
 	}
 }
 
-export {};
+export {}

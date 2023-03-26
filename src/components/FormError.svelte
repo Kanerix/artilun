@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { faXmark } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa';
+    import { faXmark } from '@fortawesome/free-solid-svg-icons'
+    import Fa from 'svelte-fa'
 	import type { ZodIssue } from 'zod'
-    import Paper from './Paper.svelte';
+    import Paper from './Paper.svelte'
 
 	function keyToLabel(key: string) {
-		switch(key) {
+		switch (key) {
 			case 'path':
 				return 'Field: '
 			case 'message':

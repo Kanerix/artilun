@@ -1,5 +1,6 @@
 <script lang="ts">
- 	import type { ActionData } from './$types'
+    import { page } from '$app/stores'
+    import type { ActionData } from './$types'
 	import Paper from '../../components/Paper.svelte'
 	import Input from '../../components/Input.svelte'
 	import Button from '../../components/Button.svelte'
@@ -21,6 +22,7 @@
 			<form
 				class="w-full grid grid-cols-2 gap-x-4 gap-y-8"
 				method="POST"
+				action="/register"
 			>
 				<Input
 					class="col-span-2 sm:col-span-1"
@@ -47,14 +49,18 @@
 					placeholder="Password"
 					name="password"
 				/>
-				<Button class="col-span-2 bg-slate-800" text="Sign Up" type="sumbit" />
+				<Button
+					class="col-span-2 bg-slate-800"
+					text="Sign Up"
+					type="sumbit"
+				/>
 			</form>
 			{#if form?.issues}
-				<FormError status={form.status} issues={form.issues} />
+				<FormError status={$page.status} issues={form.issues} />
 			{/if}
 		</Paper>
 		<h1 class="mt-6">
-			<a href="/login" class="text-slate-400">Already have an account?</a>
+			<a href="/login" class="text-slate-400 text-sm">Already have an account?</a>
 		</h1>
 	</div>
 </div>

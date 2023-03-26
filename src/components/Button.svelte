@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let text: string | undefined;
+	export let text: string | undefined
 </script>
 
 <button

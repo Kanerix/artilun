@@ -2,7 +2,7 @@
 	type Color = 'white' | 'background' | 'error'
 
 	function colorToCSS(color: Color) {
-		switch(color) {
+		switch (color) {
 			case 'white':
 				return 'bg-white'
 			case 'background':
