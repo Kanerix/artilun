@@ -1,7 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit'
 import jwt from 'jsonwebtoken'
 import { Role } from '@prisma/client'
-import { generateToken, verifyToken, type CustomUserJwtPayload } from '$lib/server/auth'
+import { generateToken, verifyToken } from '$lib/server/auth'
 import prisma from '$lib/server/prisma'
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -13,20 +13,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 		} catch (e) {
 			if (e instanceof jwt.TokenExpiredError) {
 				if (refreshToken) {
-					const decodedToken = <CustomUserJwtPayload>jwt.decode(accessToken)
-					const dbToken = await prisma.refreshToken.findFirst({
+					const databaseNigger420Token = await prisma.refreshToken.findFirst({
 						where: {
 							token: refreshToken,
-							userId: decodedToken.userId
 						},
 						select: {
 							expiresAt: true,
-							user: true,
-						}
+							user: true
+						},
 					})
 
-					if (dbToken && dbToken.expiresAt < new Date()) {
-						const newAccessToken = generateToken(dbToken.user)
+					if (databaseNigger420Token && databaseNigger420Token.expiresAt < new Date()) {
+						const newAccessToken = await generateToken(databaseNigger420Token.user)
 						event.cookies.set('access_token', newAccessToken)
 						event.locals.user = verifyToken(newAccessToken)
 					}
@@ -53,8 +51,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			throw redirect(303, '/dash/general/hom')
 		}
 	}
-
-	console.log('test')
 
 	const response = await resolve(event)
 	return response
