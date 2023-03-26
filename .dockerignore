@@ -2,3 +2,5 @@
 .gitignore
 postgres
 prisma/migrate
+node_modules
+.svelte-kit

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { env } from '$lib/server/env'
 import type { Role, User } from '@prisma/client'
+import { redirect, type RequestEvent } from '@sveltejs/kit'
 import prisma from './prisma'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
@@ -17,7 +18,7 @@ export interface CustomUserJwtPayload extends jwt.JwtPayload {
 	} 
 }
 
-export async function generateToken(user: User) {
+export async function generateToken(user: User): Promise<string> {
 	const payload = <CustomUserJwtPayload> {
 		id: user.id,
 		firstName: user.firstName,
@@ -54,12 +55,40 @@ export async function generateToken(user: User) {
 	return jwt.sign(payload, env.JWT_SECRET, { expiresIn: '15m' })
 }
 
-export function verifyToken(token: string) {
-	return <CustomUserJwtPayload>jwt.verify(token, env.JWT_SECRET, {
-		algorithms: ['HS256']
-	})
+export function verifyToken(token: string): CustomUserJwtPayload {
+	return <CustomUserJwtPayload>jwt.verify(token, env.JWT_SECRET)
 }
 
-export function decodeToken(token: string) {
+export function decodeToken(token: string): CustomUserJwtPayload {
 	return <CustomUserJwtPayload>jwt.decode(token)
+}
+
+export async function autenticate(event: RequestEvent): Promise<void> {
+	const accessToken = event.cookies.get('access_token')
+	const refreshToken = event.cookies.get('refresh_token')
+	if (!accessToken || !refreshToken) {
+		throw redirect(303, '/login')
+	}
+
+	try {
+		event.locals.user = verifyToken(accessToken)	
+	} catch (e) {
+		if (e instanceof jwt.TokenExpiredError) {
+			const databaseRefreshToken = await prisma.refreshToken.findFirst({
+				where: {
+					token: refreshToken,
+				},
+				select: {
+					expiresAt: true,
+					user: true
+				},
+			})
+
+			if (databaseRefreshToken && databaseRefreshToken.expiresAt < new Date()) {
+				const newAccessToken = await generateToken(databaseRefreshToken.user)
+				event.cookies.set('access_token', newAccessToken)
+				event.locals.user = verifyToken(newAccessToken)
+			}
+		}
+	}
 }

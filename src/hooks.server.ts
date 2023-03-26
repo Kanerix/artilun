@@ -1,38 +1,9 @@
 import { redirect, type Handle } from '@sveltejs/kit'
-import jwt from 'jsonwebtoken'
-import { Role } from '@prisma/client'
-import { generateToken, verifyToken } from '$lib/server/auth'
-import prisma from '$lib/server/prisma'
+import { OrginizationRole } from '@prisma/client'
+import { autenticate } from '$lib/server/auth'
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const accessToken = event.cookies.get('access_token')
-	const refreshToken = event.cookies.get('refresh_token')
-
-	try {
-		if (accessToken) {
-			event.locals.user = verifyToken(accessToken)	
-		}
-	} catch (e) {
-		if (e instanceof jwt.TokenExpiredError) {
-			if (refreshToken) {
-				const databaseRefreshToken = await prisma.refreshToken.findFirst({
-					where: {
-						token: refreshToken,
-					},
-					select: {
-						expiresAt: true,
-						user: true
-					},
-				})
-
-				if (databaseRefreshToken && databaseRefreshToken.expiresAt < new Date()) {
-					const newAccessToken = await generateToken(databaseRefreshToken.user)
-					event.cookies.set('access_token', newAccessToken)
-					event.locals.user = verifyToken(newAccessToken)
-				}
-			}
-		}
-	}
+	await autenticate(event)
 
 	const pathname = event.url.pathname
 	if ((pathname.startsWith('/login') || pathname.startsWith('/register')) && event.locals.user) {
@@ -48,7 +19,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	
 		const role = event.locals.user.role
-		if (pathname.startsWith('/dash/orginization') && (role === Role.ADMIN || role === Role.OWNER)) {
+		if (pathname.startsWith('/dash/orginization') &&
+			(role === OrginizationRole.ADMIN || role === OrginizationRole.OWNER)) {
 			throw redirect(303, '/dash/general/hom')
 		}
 	}
