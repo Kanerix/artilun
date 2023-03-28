@@ -15,6 +15,6 @@
 	export let color: Color = 'white'
 </script>
 
-<div {...$$props} class={`${colorToCSS(color)} shadow-xl rounded ${$$props.class}`}>
+<div {...$$props} class={`${colorToCSS(color)} shadow-xl rounded overflow-hidden ${$$props.class}`}>
 	<slot/>
 </div>

@@ -1,13 +1,13 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faChalkboardTeacher, faHouse, faTable, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faChalkboardTeacher, faGauge, faHouse, faSchool, faTable, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { OrginizationRole } from '@prisma/client'
 import type { LayoutServerLoad } from './$types'
 
 interface Categories {
-	[key: string]: Page[]
+	[key: string]: Link[]
 }
 
-interface Page {
+interface Link {
 	href: string
 	title: string
 	icon: IconDefinition
@@ -15,13 +15,11 @@ interface Page {
  
 export const load = ((event): Categories => {
 	const user = event.locals.user
-	if (!user) return {}
-
 	const categories: Categories = {}
 
 	if (!user.orginization) {
 		categories['Waitingroom'] = [
-			{ href: '/dash/waitingroom', title: 'Waitingroom', icon: faChalkboardTeacher }
+			{ href: '/dash/waitingroom', title: 'Orginizations', icon: faSchool }
 		]
 	} else {
 		categories['General'] = [
@@ -30,8 +28,9 @@ export const load = ((event): Categories => {
 			{ href: '/dash/general/lessons', title: 'Lessons', icon: faChalkboardTeacher }
 		]
 
-		if (user.role === OrginizationRole.ADMIN || user.role === OrginizationRole.OWNER) {
+		if (user.orginization.user.role === OrginizationRole.ADMIN || user.orginization.user.role === OrginizationRole.OWNER) {
 			categories['Orginization'] = [
+				{ href: '/dash/orginization/overview', title: 'Overview', icon: faGauge },
 				{ href: '/dash/orginization/users', title: 'Users', icon: faUsers },
 			]
 		}

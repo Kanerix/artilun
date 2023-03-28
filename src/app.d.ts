@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user?: CustomUserJwtPayload
+			user: CustomUserJwtPayload
 		}
 		// interface PageData {}
 		// interface Platform {}

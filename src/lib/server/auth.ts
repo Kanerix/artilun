@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { env } from '$lib/server/env'
-import type { Role, User } from '@prisma/client'
-import { redirect, type RequestEvent } from '@sveltejs/kit'
+import type { OrginizationRole, User } from '@prisma/client'
+import type { RequestEvent } from '@sveltejs/kit'
 import prisma from './prisma'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
@@ -13,13 +13,13 @@ export interface CustomUserJwtPayload extends jwt.JwtPayload {
 		name: string,
 		user: {
 			id: number,
-			role: Role
+			role: OrginizationRole
 		}
 	} 
 }
 
 export async function generateToken(user: User): Promise<string> {
-	const payload = <CustomUserJwtPayload> {
+	const payload: CustomUserJwtPayload = {
 		id: user.id,
 		firstName: user.firstName,
 		lastName: user.lastName,
@@ -66,14 +66,19 @@ export function decodeToken(token: string): CustomUserJwtPayload {
 export async function autenticate(event: RequestEvent): Promise<void> {
 	const accessToken = event.cookies.get('access_token')
 	const refreshToken = event.cookies.get('refresh_token')
-	if (!accessToken || !refreshToken) {
-		throw redirect(303, '/login')
-	}
 
 	try {
+		if (!accessToken) {
+			throw 'No access token'
+		}
+
 		event.locals.user = verifyToken(accessToken)	
 	} catch (e) {
-		if (e instanceof jwt.TokenExpiredError) {
+		if (!refreshToken) {
+			return
+		}
+
+		if (e instanceof jwt.TokenExpiredError || e === 'No access token') {
 			const databaseRefreshToken = await prisma.refreshToken.findFirst({
 				where: {
 					token: refreshToken,
@@ -84,11 +89,15 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 				},
 			})
 
-			if (databaseRefreshToken && databaseRefreshToken.expiresAt < new Date()) {
-				const newAccessToken = await generateToken(databaseRefreshToken.user)
-				event.cookies.set('access_token', newAccessToken)
-				event.locals.user = verifyToken(newAccessToken)
+			if (!databaseRefreshToken) {
+				return
 			}
+
+			if (databaseRefreshToken.expiresAt > new Date()) {
+				const newAccessToken = await generateToken(databaseRefreshToken.user)
+				event.cookies.set('access_token', newAccessToken, { path: '/' })
+				event.locals.user = decodeToken(newAccessToken)
+			}	
 		}
 	}
 }

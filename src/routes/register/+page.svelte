@@ -22,7 +22,6 @@
 			<form
 				class="w-full grid grid-cols-2 gap-x-4 gap-y-8"
 				method="POST"
-				action="/register"
 			>
 				<Input
 					class="col-span-2 sm:col-span-1"

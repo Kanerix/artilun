@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let label = ''
+	export let value: string | undefined = undefined
+	export let label: string | undefined = undefined
 </script>
 
 <div class={$$props.class}>
@@ -13,6 +14,7 @@
 	{/if}
 	<input
 		{...$$props}
+		bind:value={value}
 		id={$$props.for}
 		class="block w-full text-xs text-slate-600 p-3 shadow-md rounded focus:ring-2 placeholder:text-slate-300"
 	>

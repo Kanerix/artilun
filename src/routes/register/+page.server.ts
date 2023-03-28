@@ -30,7 +30,7 @@ export const actions = {
 		const salt = await bcrypt.genSalt(parseInt(env.SALT_ROUNDS))
 		result.data.password = await bcrypt.hash(result.data.password, salt)
 
-		// Create user in database
+		// Create user in the database
 		try {
 			await prisma.user.create({
 				data: result.data as User

@@ -15,12 +15,12 @@
 		}
 	}
 
-	export let status: number
+	export let status: number 
 	export let issues: ZodIssue[] | undefined
 </script>
 
 {#if issues}
-	<Paper color="error" class="my-4 p-4 flex">
+	<Paper color="error" class="p-4 flex {$$props.class}">
 		<div class="grow">
 			<p class="grow text-slate-900 text-xs font-bold uppercase pb-2">
 				Status: {status}
