@@ -23,7 +23,7 @@
 	<Paper color="error" class="p-4 flex {$$props.class}">
 		<div class="grow">
 			<p class="grow text-slate-900 text-xs font-bold uppercase pb-2">
-				Status: {status}
+				Fejl: {status}
 			</p>
 			{#each issues as issue}
 				<div class="my-2" />

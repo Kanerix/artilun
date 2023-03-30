@@ -20,7 +20,7 @@
 			</h1>
 			<Divider class="mb-4" />
 			<form
-				class="w-full grid grid-cols-2 gap-x-4 gap-y-8"
+				class="w-full grid grid-cols-2 gap-x-4 gap-y-8 mb-4"
 				method="POST"
 			>
 				<Input

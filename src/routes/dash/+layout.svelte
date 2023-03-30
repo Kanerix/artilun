@@ -34,7 +34,7 @@
 
 <div class="w-full">
 	<!-- Navbar -->
-	<nav class="flex items-center justify-end w-full h-14 px-6 bg-slate-50">
+	<nav class="flex items-center justify-end min-w-full h-14 px-6 bg-slate-50">
 		<button class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-200" >
 			<Fa class="text-lg text-slate-500" icon={faBars} />
 		</button>
@@ -52,6 +52,7 @@
 			</MenuItems>
 		</Menu>
 	</nav>
+	<!-- Children -->
 	<div class="grid grid-cols-12 gap-4 p-10">
 		<slot />
 	</div>

@@ -10,7 +10,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
 		if (user) {
-			throw redirect(303, '/dash/general')
+			throw redirect(303, '/dash/general/home')
 		} 
 	} else if (pathname.startsWith('/dash')) {
 		if (!user) {
