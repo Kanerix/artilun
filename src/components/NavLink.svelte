@@ -16,7 +16,7 @@
 >
 	<Fa
 		icon={icon}
-		class="mr-4 hover text-xs {isActive ? 'text-red-500' : 'text-slate-400'}"
+		class="mr-4 text-xs {isActive ? 'text-red-500' : 'text-slate-400'}"
 	/>
 	<p
 		class="font-semibold text-xs uppercase py-2 mr-4 w-full 

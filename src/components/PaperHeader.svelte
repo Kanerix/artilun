@@ -8,6 +8,6 @@
 	}
 </script>
 
-<h1 class="text-slate-700 font-bold {classMap[variant]} {$$props.class }">
+<h1 class="text-slate-700 font-bold p-6 {classMap[variant]} {$$props.class }">
 	{header}
 </h1>

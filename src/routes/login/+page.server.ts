@@ -74,7 +74,7 @@ export const actions = {
 			})
 		}
 
-		event.cookies.set('access_token', accessToken, { path: '/' })
+		event.cookies.set('access_token', accessToken, { path: '/', httpOnly: false })
 		event.cookies.set(
 			'refresh_token',
 			refreshToken,

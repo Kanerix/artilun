@@ -1,11 +1,88 @@
 import prisma from '$lib/server/prisma'
 import { OrginizationRole } from '@prisma/client'
-import { fail } from '@sveltejs/kit'
+import { fail, redirect } from '@sveltejs/kit'
 import z, { type ZodIssue } from 'zod'
+import type { LayoutServerLoad } from '../../$types'
+
+interface UserTableData {
+	id: number
+	firstName: string
+	lastName: string
+	email: string
+	role: string
+}
+
+interface UserInvite {
+	id: number
+	email: string
+}
+
+interface LoadData {
+	userTableData: UserTableData[]
+	invites: UserInvite[]
+}
+
+export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
+	const user = event.locals.user
+	if (!user.orginization) {
+		throw redirect(302, '/dash/waitingroom')
+	}
+
+	const [orginizationUsers, orginizationIvites] = await prisma.$transaction([
+		prisma.orginizationUser.findMany({
+			where: {
+				orginizationId: user.orginization.id
+			},
+			select: {
+				id: true,
+				role: true,
+				user: {
+					select: {
+						firstName: true,
+						lastName: true,
+						email: true
+					}
+				}
+			}
+		}),
+		prisma.orginizationIvite.findMany({
+			where: {
+				orginizationId: user.orginization.id
+			},
+			select: {
+				user: {
+					select: {
+						id: true,
+						email: true
+					}
+				}
+			}
+		})
+	])
+
+	const users = orginizationUsers.map((user) => ({
+		id: user.id,
+		firstName: user.user.firstName,
+		lastName: user.user.lastName,
+		email: user.user.email,
+		role: user.role
+	}))
+
+	const invites = orginizationIvites.map((invite) => ({
+		id: invite.user.id,
+		email: invite.user.email,
+	}))
+
+	return {
+		userTableData: users as UserTableData[],
+		invites: invites as UserInvite[]
+	}
+})
 
 const orginizationInviteSchema = z.object({
 	email: z.string().email(),
 })
+
 export const actions = {
 	default: (async (event) => {
 		const data = await event.request.formData()

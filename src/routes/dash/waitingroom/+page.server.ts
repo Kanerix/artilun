@@ -10,7 +10,11 @@ interface Invite {
 	}
 }
 
-export const load: LayoutServerLoad = (async (event): Promise<{ invites: Invite[] }> => {
+interface LoadData {
+	invites: Invite[]
+}
+
+export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 	const user = event.locals.user
 	const invites = {
 		invites: await prisma.orginizationIvite.findMany({

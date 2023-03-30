@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			throw redirect(303, '/dash/general/home')
 		}
 
-		if (pathname.startsWith('/dash/orginization')) {
+		if (pathname.startsWith('/dash/orginization') || pathname.startsWith('/dash/general')) {
 			if (!user.orginization) {
 				throw redirect(303, '/dash/waitingroom')
 			}

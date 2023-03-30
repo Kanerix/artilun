@@ -4,26 +4,42 @@
 	import {
 		Menu,
 		MenuButton,
-		MenuItem,
 		MenuItems,
 	} from "@rgossiaux/svelte-headlessui";
 	import type { LayoutData } from './$types'
 	import Divider from '../../components/Divider.svelte'
     import NavLink from '../../components/NavLink.svelte'
+    import Button from '../../components/Button.svelte';
 
 	export let data: LayoutData
+
+	async function logout() {
+		await fetch('/api/logout', {
+			method: 'POST', redirect: 'follow'
+		})
+	}
 </script>
 
 <!-- Sidebar -->
-<nav class="md:flex lg:flex-col px-6 py-4 min-h-screen w-[16rem] overflow-scroll bg-white">
+<nav class="md:flex lg:flex-col px-6 py-4 min-h-screen w-[16rem] bg-white">
 	<div class="flex flex-col">
 		<h1 class="text-sm font-semibold text-slate-500 uppercase my-4">
 			Artilun
 		</h1>
-		{#each Object.entries(data) as [categoryTitle, pages]}
+		<Divider />
+		<div class="flex items-center bg-slate-200 rounded h-full my-6 p-3">
+			<div class="flex items-center justify-center bg-slate-300 w-10 h-10 mr-4 rounded-full">
+				<Fa icon={faUser} class="text-xxl text-slate-500" />
+			</div>
+			<div>
+				<h1 class="text-slate-700 font-medium">{data.user.firstName}</h1>
+				<h1 class="text-slate-700 font-medium">{data.user.lastName}</h1>
+			</div>
+		</div>
+		{#each Object.entries(data.categories) as [category, pages]}
 			<Divider />
 			<h6 class="font-semibold text-xs text-slate-500 uppercase mt-4 mb-6">
-				{categoryTitle}
+				{category}
 			</h6>
 			{#each pages as props}
 				<NavLink {...props} />
@@ -41,14 +57,15 @@
 		<h1 class="md:hidden grow text-slate-500 text-center font-semibold text-sx uppercase">
 			Artilun
 		</h1>
-		<Menu>
-			<MenuButton class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-200">
+		<Menu as="div" class="relative">
+			<MenuButton class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-200">
 				<Fa class="text-lg text-slate-500" icon={faUser} />
 			</MenuButton>
-			<MenuItems class="absolute">
-				<MenuItem let:active class="bg-slate-100 p-4 rounded shadow-md bottom-16">
-					<button class:active>Log Out</button>
-				</MenuItem>
+			<MenuItems class="origin-top-right absolute right-0 rounded shadow-md p-5 w-56 bg-white">
+				<h6 class="text-sm font-semibold text-slate-500 uppercase text-center">
+					User Menu
+				</h6>
+				<Button on:click={logout} class="w-full mt-2" text="Log Out" />
 			</MenuItems>
 		</Menu>
 	</nav>

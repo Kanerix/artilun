@@ -1,4 +1,5 @@
 <script lang="ts">
+    import toast from 'svelte-french-toast';
     import type { ActionData, PageData } from './$types';
     import { page } from '$app/stores';
     import Button from '../../../components/Button.svelte';
@@ -6,10 +7,41 @@
     import Input from '../../../components/Input.svelte';
     import Paper from '../../../components/Paper.svelte';
     import PaperHeader from '../../../components/PaperHeader.svelte';
+    import TableData from '../../../components/TableData.svelte';
     import TableHead from '../../../components/TableHead.svelte';
+    import PaperBody from '../../../components/PaperBody.svelte';
 
 	export let form: ActionData
 	export let data: PageData
+
+	async function acceptInvite(id: number) {
+		const request = new Promise(async (resolve, reject) => {
+			const response = await fetch('/api/orginization/invite/accept', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id
+				})
+			})
+
+			if (response.ok) {
+				resolve(response)
+			} else {
+				reject()
+			}
+		})
+
+		toast.promise(
+			request,
+			{
+				loading: 'Accepting...',
+				success: 'You joined the orginization!',
+				error: 'Could not join the orginization.',
+			}
+		);
+	}
 </script>
 
 <Paper class="lg:col-span-8 col-span-12">
@@ -17,7 +49,7 @@
 		class="p-6"
 		header="Create a new orginization"
 	/>
-	<div class="pt-4 pb-6 px-6 h-full bg-slate-100">
+	<PaperBody>
 		<form
 			class="flex"
 			method="POST"
@@ -37,15 +69,22 @@
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} class="mt-4" />
 		{/if}
-	</div>
+	</PaperBody>
 </Paper>
 <Paper class="lg:col-span-4 col-span-12">
 	<PaperHeader
-		class="p-6"
 		header="Orginization invites"
 	/>
-	<table class="pt-4 pb-6 px-6 w-full table-fixed">
-		<TableHead headers={["Orginization", "Action"]} />
+	<table class="pt-4 pb-6 px-6 w-full">
+		<thead {...$$props} class="bg-slate-100 border-y border-slate-200 {$$props.class}">
+			<tr>
+				{#each ["Orginization", "Action"] as header}
+					<TableHead>
+						{header}	
+					</TableHead>
+				{/each}
+			</tr>
+		</thead>
 		{#if page}
 			<tbody>
 				{#if data.invites.length === 0}
@@ -55,12 +94,16 @@
 				{/if}
 				{#each data.invites as invite}
 					<tr>
-						<td colspan=1 class="py-2 pl-4 truncate">
+						<TableData>
 							{invite.orginization.name}
-						</td>
-						<td colspan=1 class="py-2 text-center">
-							<Button text="Accept" />
-						</td>
+						</TableData>
+						<TableData>
+							<Button
+								text="Accept"
+								class="bg-slate-800"
+								on:click={() => acceptInvite(invite.orginization.id)}
+							/>
+						</TableData>
 					</tr>
 				{/each}
 			</tbody>

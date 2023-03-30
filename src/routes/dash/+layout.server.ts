@@ -1,19 +1,29 @@
+import { decodeToken } from '$lib/server/auth'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faChalkboardTeacher, faGauge, faHouse, faSchool, faTable, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { OrginizationRole } from '@prisma/client'
+import { redirect } from '@sveltejs/kit'
 import type { LayoutServerLoad } from './$types'
-
-interface Categories {
-	[key: string]: Link[]
-}
 
 interface Link {
 	href: string
 	title: string
 	icon: IconDefinition
 }
- 
-export const load = ((event): Categories => {
+
+interface Categories {
+	[key: string]: Link[]
+}
+
+interface SidebarData {
+	user: {
+		firstName: string
+		lastName: string
+	}
+	categories: Categories
+}
+
+export const load = ((event): SidebarData => {
 	const user = event.locals.user
 	const categories: Categories = {}
 
@@ -36,5 +46,13 @@ export const load = ((event): Categories => {
 		}
 	}
 
-	return categories
+	const accessToken = event.cookies.get('access_token')
+	if (!accessToken) {
+		throw redirect(302, '/login')
+	}
+
+	return {
+		user: decodeToken(accessToken),
+		categories,
+	}
 }) satisfies LayoutServerLoad
