@@ -83,10 +83,10 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 
 		event.locals.user = verifyToken(accessToken)	
 	} catch (e) {
-		if (e instanceof jwt.TokenExpiredError || e === 'No access token') {
+		if (e instanceof jwt.TokenExpiredError || e === 'Generate new token') {
 			const token = await prisma.refreshToken.findFirst({
 				where: { token: refreshToken, },
-				select: { expiresAt: true, user: true },
+				select: { id: true, expiresAt: true, user: true },
 			})
 
 			if (!token || token.expiresAt > new Date()) {
