@@ -1,9 +1,10 @@
 import z, { type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
-import type { LayoutServerLoad } from '../$types'
 import { fail, redirect } from '@sveltejs/kit'
+import type { LayoutServerLoad } from '../$types'
 
 interface Invite {
+	id: number
 	orginization: {
 		id: number
 		name: string
@@ -22,9 +23,9 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 				userId: user.id
 			},
 			select: {
+				id: true,
 				orginization: {
 					select: {
-						id: true,
 						name: true
 					}
 				},

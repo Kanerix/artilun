@@ -15,26 +15,20 @@
 	export let data: PageData
 
 	async function kickUser(id: number) {
-		const request = new Promise(async (resolve, reject) => {
-			const response = await fetch('/api/orginization/kick', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					id
-				})
-			})
-
-			if (response.ok) {
-				resolve(response)
-			} else {
-				reject()
-			}
-		})
-
 		toast.promise(
-			request,
+			new Promise(async (resolve, reject) => {
+				const response = await fetch('/api/orginization/kick', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id })
+				})
+
+				if (response.ok) {
+					resolve(response)
+				} else {
+					reject()
+				}
+			}),
 			{
 				loading: 'Kicking...',
 				success: 'User has been kicked!',
@@ -43,7 +37,32 @@
 		);
 	}
 
+	async function cancelInvite(id: number) {
+
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const response = await fetch('/api/orginization/invite/cancel', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ id })
+				})
+
+				if (response.ok) {
+					resolve(response)
+				} else {
+					reject()
+				}
+			}),
+			{
+				loading: 'Cancelling...',
+				success: 'Invite has been canceled!',
+				error: 'Could not cancel the invite.',
+			}
+		);
+	}
+
 	$: form
+	$: data
 </script>
 
 <Paper class="lg:col-span-8 col-span-12">
@@ -86,12 +105,12 @@
 		</thead>
 		{#if page}
 			<tbody>
-				{#if data.userTableData.length === 0}
-				<tr>
-					<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
-						No users
-					</td>
-				</tr>
+				{#if data.invites.length === 0}
+					<tr>
+						<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+							No active invites
+						</td>
+					</tr>
 				{/if}
 				{#each data.invites as invite}
 					<tr>
@@ -99,7 +118,10 @@
 							{invite.email}
 						</TableData>
 						<TableData>
-							<Button text="Cancel" />
+							<Button
+								text="Cancel"
+								on:click={() => cancelInvite(invite.id)}
+							/>
 						</TableData>
 					</tr>
 				{/each}
@@ -112,7 +134,7 @@
 	<table class="pt-4 pb-6 px-6 w-full">
 		<thead {...$$props} class="bg-slate-100 border-y border-slate-200 {$$props.class}">
 			<tr>
-				{#each ["Fisrt name", "Last name", "Email", "Role", "Action"] as header}
+				{#each ["First name", "Last name", "Email", "Role", "Action"] as header}
 					<TableHead>
 						{header}
 					</TableHead>

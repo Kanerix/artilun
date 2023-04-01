@@ -37,9 +37,11 @@ export const actions = {
 			})		
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				return fail(409, {
-					issues: [{ 'message': 'Email already exists' }] as ZodIssue[]
-				})
+				if (e.code === 'P2002') {
+					return fail(409, {
+						issues: [{ 'message': 'Email already exists' }] as ZodIssue[]
+					})
+				}
 			}
 
 			return fail(500, {
@@ -47,7 +49,6 @@ export const actions = {
 			})
 		}
 
-		// If sucessfull, redirect to login page
 		throw redirect(308, '/login')
 	}
 } satisfies Actions

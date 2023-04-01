@@ -101,7 +101,7 @@
 							<Button
 								text="Accept"
 								class="bg-slate-800"
-								on:click={() => acceptInvite(invite.orginization.id)}
+								on:click={() => acceptInvite(invite.id)}
 							/>
 						</TableData>
 					</tr>

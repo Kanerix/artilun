@@ -20,7 +20,7 @@
 </script>
 
 {#if issues}
-	<Paper color="error" class="p-4 flex {$$props.class}">
+	<Paper color="error" class="flex p-4 {$$props.class}">
 		<div class="grow">
 			<p class="grow text-slate-900 text-xs font-bold uppercase pb-2">
 				Error: {status}

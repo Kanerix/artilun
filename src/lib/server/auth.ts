@@ -3,6 +3,8 @@ import { env } from '$lib/server/env'
 import type { OrginizationRole, User } from '@prisma/client'
 import type { RequestEvent } from '@sveltejs/kit'
 import prisma from './prisma'
+import { decode } from 'punycode'
+import redis from './redis'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
 	id: number
@@ -67,37 +69,33 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 	const accessToken = event.cookies.get('access_token')
 	const refreshToken = event.cookies.get('refresh_token')
 
+	if (!accessToken || !refreshToken) {
+		return 
+	}
+
 	try {
-		if (!accessToken) {
-			throw 'No access token'
+		const decoded = decodeToken(accessToken)
+
+		const blocked = await redis.get(decoded.id.toString()) 
+		if (blocked === 'true') {
+			throw 'Generate new token'
 		}
 
 		event.locals.user = verifyToken(accessToken)	
 	} catch (e) {
-		if (!refreshToken) {
-			return
-		}
-
 		if (e instanceof jwt.TokenExpiredError || e === 'No access token') {
-			const databaseRefreshToken = await prisma.refreshToken.findFirst({
-				where: {
-					token: refreshToken,
-				},
-				select: {
-					expiresAt: true,
-					user: true
-				},
+			const token = await prisma.refreshToken.findFirst({
+				where: { token: refreshToken, },
+				select: { expiresAt: true, user: true },
 			})
 
-			if (!databaseRefreshToken) {
+			if (!token || token.expiresAt > new Date()) {
 				return
 			}
 
-			if (databaseRefreshToken.expiresAt > new Date()) {
-				const newAccessToken = await generateToken(databaseRefreshToken.user)
-				event.cookies.set('access_token', newAccessToken, { path: '/' })
-				event.locals.user = decodeToken(newAccessToken)
-			}	
+			const newAccessToken = await generateToken(token.user)
+			event.cookies.set('access_token', newAccessToken, { path: '/' })
+			event.locals.user = decodeToken(newAccessToken)
 		}
 	}
 }

@@ -14,8 +14,8 @@
 	export let data: LayoutData
 
 	async function logout() {
-		await fetch('/api/logout', {
-			method: 'POST', redirect: 'follow'
+		await fetch('/api/auth/logout', {
+			method: 'POST'
 		})
 	}
 </script>
@@ -27,13 +27,17 @@
 			Artilun
 		</h1>
 		<Divider />
-		<div class="flex items-center bg-slate-200 rounded h-full my-6 p-3">
-			<div class="flex items-center justify-center bg-slate-300 w-10 h-10 mr-4 rounded-full">
-				<Fa icon={faUser} class="text-xxl text-slate-500" />
+		<div class="flex items-center bg-slate-100 rounded h-20 my-6 p-3">
+			<div class="flex items-center justify-center bg-slate-200 h-10 w-10 mr-3 rounded-full">
+				<Fa icon={faUser} class="text-xxl text-slate-400" />
 			</div>
 			<div>
-				<h1 class="text-slate-700 font-medium">{data.user.firstName}</h1>
-				<h1 class="text-slate-700 font-medium">{data.user.lastName}</h1>
+				<h1 class="w-32 font-medium text-slate-700 text-ellipsis whitespace-nowrap overflow-hidden">
+					{data.user.firstName}
+				</h1>
+				<h1 class="w-32 font-medium text-slate-700 text-ellipsis whitespace-nowrap overflow-hidden">
+					{data.user.lastName}
+				</h1>
 			</div>
 		</div>
 		{#each Object.entries(data.categories) as [category, pages]}

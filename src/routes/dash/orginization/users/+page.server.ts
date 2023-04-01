@@ -50,9 +50,9 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 				orginizationId: user.orginization.id
 			},
 			select: {
+				id: true,
 				user: {
 					select: {
-						id: true,
 						email: true
 					}
 				}
@@ -69,7 +69,7 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 	}))
 
 	const invites = orginizationIvites.map((invite) => ({
-		id: invite.user.id,
+		id: invite.id,
 		email: invite.user.email,
 	}))
 

@@ -1,6 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit'
 import { OrginizationRole } from '@prisma/client'
 import { autenticate } from '$lib/server/auth'
+import client from '$lib/server/redis'
 
 export const handle: Handle = async ({ event, resolve }) => {
 	await autenticate(event)
@@ -27,7 +28,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 			}
 
 			const role = user.orginization.user.role
-			if (role !== OrginizationRole.ADMIN && role !== OrginizationRole.OWNER) {
+			if (
+				pathname.startsWith('/dash/orginization') &&
+				(role !== OrginizationRole.ADMIN && role !== OrginizationRole.OWNER)
+			) {
 				throw redirect(303, '/dash/general/home')
 			}
 		}
