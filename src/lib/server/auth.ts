@@ -78,12 +78,12 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 
 		const blocked = await redis.get(decoded.id.toString()) 
 		if (blocked === 'true') {
-			throw 'Generate new token'
+			throw 'regenerate'
 		}
 
 		event.locals.user = verifyToken(accessToken)	
 	} catch (e) {
-		if (e instanceof jwt.TokenExpiredError || e === 'Generate new token') {
+		if (e instanceof jwt.TokenExpiredError || e === 'regenerate') {
 			const token = await prisma.refreshToken.findFirst({
 				where: { token: refreshToken, },
 				select: { id: true, expiresAt: true, user: true },
