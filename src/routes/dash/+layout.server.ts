@@ -27,6 +27,8 @@ export const load = ((event): SidebarData => {
 	const user = event.locals.user
 	const categories: Categories = {}
 
+	event.depends('auth:logout')
+
 	if (!user.orginization) {
 		categories['Waitingroom'] = [
 			{ href: '/dash/waitingroom', title: 'Orginizations', icon: faSchool }

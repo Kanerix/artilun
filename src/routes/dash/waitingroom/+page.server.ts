@@ -19,9 +19,7 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 	const user = event.locals.user
 	const invites = {
 		invites: await prisma.orginizationIvite.findMany({
-			where: {
-				userId: user.id
-			},
+			where: { userId: user.id },
 			select: {
 				id: true,
 				orginization: {
@@ -32,6 +30,8 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 			}
 		})
 	}
+
+	event.depends('invite:accept')
 
 	return invites as { invites: Invite[] }
 }) satisfies LayoutServerLoad

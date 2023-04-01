@@ -1,7 +1,6 @@
 import { redirect, type Handle } from '@sveltejs/kit'
 import { OrginizationRole } from '@prisma/client'
 import { autenticate } from '$lib/server/auth'
-import client from '$lib/server/redis'
 
 export const handle: Handle = async ({ event, resolve }) => {
 	await autenticate(event)

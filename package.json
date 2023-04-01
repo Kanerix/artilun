@@ -20,9 +20,8 @@
 		"@tanstack/svelte-table": "^8.8.4",
 		"@types/jsonwebtoken": "^9.0.1",
 		"bcrypt": "^5.1.0",
-		"body-parser": "^1.20.2",
 		"jsonwebtoken": "^9.0.0",
-		"redis-om": "^0.3.6",
+		"redis": "^4.6.5",
 		"svelte-fa": "^3.0.3",
 		"svelte-french-toast": "1.0.4-beta.0",
 		"zod": "^3.21.4"

@@ -10,6 +10,7 @@
 	import Divider from '../../components/Divider.svelte'
     import NavLink from '../../components/NavLink.svelte'
     import Button from '../../components/Button.svelte';
+    import { invalidate } from '$app/navigation';
 
 	export let data: LayoutData
 
@@ -17,6 +18,7 @@
 		await fetch('/api/auth/logout', {
 			method: 'POST'
 		})
+		invalidate('auth:logout')
 	}
 </script>
 
@@ -74,7 +76,7 @@
 		</Menu>
 	</nav>
 	<!-- Children -->
-	<div class="grid grid-cols-12 gap-4 p-10">
+	<div class="grid grid-cols-12 gap-6 p-10">
 		<slot />
 	</div>
 </div>

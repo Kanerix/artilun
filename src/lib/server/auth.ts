@@ -3,7 +3,6 @@ import { env } from '$lib/server/env'
 import type { OrginizationRole, User } from '@prisma/client'
 import type { RequestEvent } from '@sveltejs/kit'
 import prisma from './prisma'
-import { decode } from 'punycode'
 import redis from './redis'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
@@ -76,8 +75,8 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 	try {
 		const decoded = decodeToken(accessToken)
 
-		const blocked = await redis.get(decoded.id.toString()) 
-		if (blocked === 'true') {
+		const blocked = await redis.get(`blocked:${decoded.id.toString()}`)
+		if (blocked) {
 			throw 'regenerate'
 		}
 
@@ -89,11 +88,16 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 				select: { id: true, expiresAt: true, user: true },
 			})
 
-			if (!token || token.expiresAt > new Date()) {
+			if (!token || token.expiresAt < new Date()) {
 				return
 			}
 
 			const newAccessToken = await generateToken(token.user)
+
+			if (e === 'regenerate') {
+				redis.del(`blocked:${token.user.id.toString()}`)
+			}
+
 			event.cookies.set('access_token', newAccessToken, { path: '/' })
 			event.locals.user = decodeToken(newAccessToken)
 		}

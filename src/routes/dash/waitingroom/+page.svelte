@@ -10,31 +10,31 @@
     import TableData from '../../../components/TableData.svelte';
     import TableHead from '../../../components/TableHead.svelte';
     import PaperBody from '../../../components/PaperBody.svelte';
+    import { invalidate } from '$app/navigation';
 
 	export let form: ActionData
 	export let data: PageData
 
 	async function acceptInvite(id: number) {
-		const request = new Promise(async (resolve, reject) => {
-			const response = await fetch('/api/orginization/invite/accept', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					id
-				})
-			})
-
-			if (response.ok) {
-				resolve(response)
-			} else {
-				reject()
-			}
-		})
-
 		toast.promise(
-			request,
+			new Promise(async (fufill, reject) => {
+				const response = await fetch('/api/orginization/invite/accept', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ id })
+				})
+
+				invalidate('invite:accept')
+
+				if (response.ok) {
+					fufill(response)
+				} else {
+					reject()
+				}
+
+			}),
 			{
 				loading: 'Accepting...',
 				success: 'You joined the orginization!',

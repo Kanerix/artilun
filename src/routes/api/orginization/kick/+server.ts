@@ -57,7 +57,7 @@ export const POST: RequestHandler = async (event) => {
 			}
 		})
 
-		redis.set(deleted.user.id.toString(), 'true')
+		redis.set(`blocked:${deleted.user.id}`, '1', { EX: 900 })
 
 		return new Response(null)
 	} catch (e) {

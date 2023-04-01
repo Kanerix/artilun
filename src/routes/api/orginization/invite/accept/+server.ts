@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client'
 import { error } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { RequestHandler } from './$types'
+import redis from '$lib/server/redis'
 
 const acceptInviteSchema = z.object({
 	id: z.number().positive()
@@ -22,9 +23,7 @@ export const POST: RequestHandler = async (event) => {
 
 	try {
 		const invite = await prisma.orginizationIvite.findUnique({
-			where: {
-				id: result.data.id 
-			},
+			where: { id: result.data.id },
 			select: {
 				orginization: {
 					select: {
@@ -38,19 +37,26 @@ export const POST: RequestHandler = async (event) => {
 			throw error(404, 'Invite not found')
 		}
 
-		await prisma.$transaction([
+		const [userId] = await prisma.$transaction([
 			prisma.orginizationUser.create({
 				data: {
 					userId: user.id,
 					orginizationId: invite.orginization.id,
+				},
+				select: {
+					user: {
+						select: {
+							id: true
+						}
+					}
 				}
 			}),
 			prisma.orginizationIvite.delete({
-				where: {
-					id: result.data.id
-				}
+				where: { id: result.data.id }
 			})
 		])
+
+		redis.set(`blocked:${userId.user.id}`, '1', { EX: 900 })
 
 		return new Response(null)
 	} catch (e) {

@@ -10,21 +10,24 @@
     import PaperBody from '../../../../components/PaperBody.svelte';
     import TableData from '../../../../components/TableData.svelte';
     import TableHead from '../../../../components/TableHead.svelte';
+    import { invalidate } from '$app/navigation';
 	
 	export let form: ActionData
 	export let data: PageData
 
 	async function kickUser(id: number) {
 		toast.promise(
-			new Promise(async (resolve, reject) => {
+			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/kick', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id })
 				})
 
+				invalidate('user:kick')
+
 				if (response.ok) {
-					resolve(response)
+					fufill(response)
 				} else {
 					reject()
 				}
@@ -38,17 +41,18 @@
 	}
 
 	async function cancelInvite(id: number) {
-
 		toast.promise(
-			new Promise(async (resolve, reject) => {
+			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/invite/cancel', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ id })
 				})
 
+				invalidate('invite:cancel')
+
 				if (response.ok) {
-					resolve(response)
+					fufill(response)
 				} else {
 					reject()
 				}
@@ -60,9 +64,6 @@
 			}
 		);
 	}
-
-	$: form
-	$: data
 </script>
 
 <Paper class="lg:col-span-8 col-span-12">

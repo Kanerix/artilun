@@ -30,9 +30,7 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 
 	const [orginizationUsers, orginizationIvites] = await prisma.$transaction([
 		prisma.orginizationUser.findMany({
-			where: {
-				orginizationId: user.orginization.id
-			},
+			where: { orginizationId: user.orginization.id },
 			select: {
 				id: true,
 				role: true,
@@ -46,9 +44,7 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 			}
 		}),
 		prisma.orginizationIvite.findMany({
-			where: {
-				orginizationId: user.orginization.id
-			},
+			where: { orginizationId: user.orginization.id },
 			select: {
 				id: true,
 				user: {
@@ -72,6 +68,9 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 		id: invite.id,
 		email: invite.user.email,
 	}))
+
+	event.depends('user:kick')
+	event.depends('invite:cancel')
 
 	return {
 		userTableData: users as UserTableData[],
@@ -111,18 +110,29 @@ export const actions = {
 
 		try {
 			const invitedUser = await prisma.user.findUnique({
-				where: {
-					email: result.data.email
-				},
+				where: { email: result.data.email },
 				select: {
 					id: true,
 					orginizationUser: {
 						select: {
 							userId: true
 						}
+					},
+					orginizationInvites: {
+						select: {
+							userId: true
+						}
 					}
 				}
 			})
+
+			if (invitedUser?.orginizationInvites.filter(
+				(invite) => invite.userId === invitedUser.id
+			).length) {
+				return fail(404, {
+					issues: [{ 'message': 'User already invited' }] as ZodIssue[]
+				})
+			}
 
 			if (!invitedUser) {
 				return fail(404, {
