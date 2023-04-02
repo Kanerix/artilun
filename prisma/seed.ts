@@ -62,7 +62,7 @@ async function main() {
 	await prisma.orginization.createMany({
 		data: [
 			{
-				name: 'Kasper\'s Orginization',
+				name: 'Københavns Medie Gymnasium',
 			}
 		],
 		skipDuplicates: true
