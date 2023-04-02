@@ -59,60 +59,67 @@ async function main() {
 		skipDuplicates: true,
 	})
 
+	await prisma.orginization.createMany({
+		data: [
+			{
+				name: 'Kasper\'s Orginization',
+			}
+		],
+		skipDuplicates: true
+	})
+
+	const orginization = await prisma.orginization.findMany({})
 	const users = await prisma.user.findMany({})
 
-	const orginizationUser = await prisma.orginizationUser.create({
-		data: {
-			role: 'OWNER',
-			user: {
-				connect: {
-					id: users[0].id
-				}	
-			},
-			orginization: {
-				create: {
-					name: 'Københavns Medie Gymnasium'
-				}
+	await prisma.orginizationUser.createMany({
+		data: [
+			{
+				role: 'OWNER',
+				userId: users[0].id,
+				orginizationId: orginization[0].id
 			}
-		},
+		],
+		skipDuplicates: true,
 	})
 
 	await prisma.orginizationUser.createMany({
 		data: [
 			{
 				userId: users[1].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
 			{
 				userId: users[2].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
-		]
+		],
+		skipDuplicates: true,	
 	})
 
 	await prisma.orginizationIvite.createMany({
 		data: [
 			{
 				userId: users[3].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
 			{
 				userId: users[4].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
 			{
 				userId: users[5].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
 			{
 				userId: users[6].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
 			{
 				userId: users[7].id,
-				orginizationId: orginizationUser.orginizationId
+				orginizationId: orginization[0].id
 			},
-		]
+		],
+		skipDuplicates: true,	
 	})
 }
 
