@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit'
 import { Prisma, type User } from '@prisma/client'
 import bcrypt from 'bcrypt'
-import z, { type ZodIssue } from 'zod'
+import { z, type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
 import { generateToken } from '$lib/server/auth'
 import type { Actions } from '../login/$types'

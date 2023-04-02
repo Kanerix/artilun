@@ -30,7 +30,7 @@
 				if (response.ok) {
 					fufill(response)
 				} else {
-					reject()
+					reject(response)
 				}
 			}),
 			{
@@ -55,7 +55,7 @@
 				if (response.ok) {
 					fufill(response)
 				} else {
-					reject()
+					reject(response)
 				}
 			}),
 			{
@@ -95,7 +95,6 @@
 				error: 'Could not invite the user.',
 			}
 		);
-
 	}
 </script>
 
@@ -155,6 +154,7 @@
 						<TableData>
 							<Button
 								text="Cancel"
+								color="error"
 								on:click={() => cancelInvite(invite.id)}
 							/>
 						</TableData>
@@ -202,6 +202,7 @@
 						<TableData>
 							<Button
 								text="Kick"
+								color="error"
 								on:click={() => kickUser(user.id)}
 							/>
 						</TableData>

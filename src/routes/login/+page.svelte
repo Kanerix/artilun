@@ -37,7 +37,7 @@
 					name="password"
 				/>
 				<Button
-					class="col-span-2 bg-slate-800 text-xs uppercase p-3"
+					class="col-span-2 text-xs uppercase p-3"
 					text="SignIn"
 					type="sumbit"
 				/>

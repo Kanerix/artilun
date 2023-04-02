@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from  'zod'
 import { Prisma } from '@prisma/client'
 import { error } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'

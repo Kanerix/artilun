@@ -1,5 +1,9 @@
 <script lang="ts">
+    import { applyAction, deserialize } from '$app/forms';
+    import { invalidate } from '$app/navigation';
     import { page } from '$app/stores';
+    import toast from 'svelte-french-toast';
+    import type { ActionData, PageData } from './$types';
     import Button from '../../../../components/Button.svelte';
     import Input from '../../../../components/Input.svelte';
     import Paper from '../../../../components/Paper.svelte';
@@ -8,10 +12,67 @@
     import StatCard from '../../../../components/StatCard.svelte';
     import TableData from '../../../../components/TableData.svelte';
     import TableHead from '../../../../components/TableHead.svelte';
-    import type { PageData } from './$types';
+    import FormError from '../../../../components/FormError.svelte';
+    import Fa from 'svelte-fa';
+    import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 	export let data: PageData
+	export let form: ActionData
 
+	async function addSubject(event: Event) {
+		toast.promise(
+			new Promise(async (fufill, reject) => {
+				const form = event.target as HTMLFormElement
+				const data = new FormData(form);
+				const request = fetch(form.action, {
+					method: 'POST',
+					body: data
+				});
+
+				const response = await request
+				const result = deserialize(await response.text());
+
+				await invalidate('subject:add')
+
+				if (result.type === 'success') {
+					fufill(result)
+				} else {
+					reject(result)
+				}
+
+				applyAction(result);
+			}),
+			{
+				loading: 'Adding...',
+				success: 'Subject has been added!',
+				error: 'Could not add the subject.',
+			}
+		);
+	}
+
+	async function removeSubject(id: number) {
+		toast.promise(
+			new Promise(async (fufill, reject) => {
+				const response = await fetch('/api/orginization/subject/remove', {
+					method: 'POST',
+					body: JSON.stringify({ id })
+				});
+
+				await invalidate('subject:remove')
+
+				if (response.ok) {
+					fufill(response)
+				} else {
+					reject(response)
+				}
+			}),
+			{
+				loading: 'Removing...',
+				success: 'Subject has been removed!',
+				error: 'Could not remove the subject.',
+			}
+		);
+	}
 </script>
 
 
@@ -36,7 +97,7 @@
 	description="Since random time"
 />
 
-<Paper class="md:col-span-6 col-span-12">
+<Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader header="Subjects" />
 	<table class="pt-4 pb-6 px-6 w-full">
 		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
@@ -59,13 +120,16 @@
 				{/if}
 				{#each data.subjects as subject}
 					<tr>
-						<TableData>
-							{subject.name}
-						</TableData>
-						<TableData>
-							<Button
-								text="Cancel"
-							/>
+						<TableData class="flex items-center">
+							<p class="grow">
+								{subject.name}
+							</p>
+							<button
+								class="bg-slate-200 w-6 h-6 rounded-full border border-slate-300"
+								on:click={() => removeSubject(subject.id)}
+							>
+								<Fa icon={faClose} class="m-auto" />
+							</button>
 						</TableData>
 					</tr>
 				{/each}
@@ -74,7 +138,9 @@
 	</table>
 	<PaperBody>
 		<form
-			class="flex"
+			class="flex mb-4"
+			method="POST"
+			on:submit|preventDefault={addSubject}
 		>
 			<Input
 				class="grow mr-6"
@@ -82,10 +148,10 @@
 				label="Subject"
 				name="subject"
 			/>
-			<Button
-				text="Add"
-				type="submit"	
-			/>
+			<Button text="Add" type="submit" />
 		</form>
+		{#if form?.issues}
+			<FormError status={$page.status} issues={form.issues} />
+		{/if}
 	</PaperBody>
 </Paper>

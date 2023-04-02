@@ -7,10 +7,10 @@
 		MenuItems,
 	} from "@rgossiaux/svelte-headlessui";
 	import type { LayoutData } from './$types'
-	import Divider from '../../components/Divider.svelte'
-    import NavLink from '../../components/NavLink.svelte'
-    import Button from '../../components/Button.svelte';
     import { invalidate } from '$app/navigation';
+    import { page } from '$app/stores';
+	import Divider from '../../components/Divider.svelte'
+    import Button from '../../components/Button.svelte';
 
 	export let data: LayoutData
 
@@ -20,10 +20,14 @@
 		})
 		invalidate('auth:logout')
 	}
+
+	let isOpen = false
+
+	$: isOpen
 </script>
 
 <!-- Sidebar -->
-<nav class="md:flex lg:flex-col px-6 py-4 min-h-screen w-[16rem] bg-white">
+<nav class="{isOpen ? 'absolute' : 'hidden'} md:shadow-none shadow-md px-6 py-4 min-h-screen w-[16rem] bg-white">
 	<div class="flex flex-col">
 		<h1 class="text-sm font-semibold text-slate-500 uppercase my-4">
 			Artilun
@@ -47,8 +51,24 @@
 			<h6 class="font-semibold text-xs text-slate-500 uppercase mt-4 mb-6">
 				{category}
 			</h6>
-			{#each pages as props}
-				<NavLink {...props} />
+			{#each pages as link}
+				{@const isActive = $page.url.pathname === link.href}
+				<a
+					href="{link.href}"
+					class="flex items-center w-full mb-4" 
+					on:click={() => isOpen = !isOpen}	
+				>
+					<Fa
+						icon={link.icon}
+						class="mr-4 text-xs {isActive ? 'text-red-500' : 'text-slate-400'}"
+					/>
+					<p
+						class="font-semibold text-xs uppercase py-2 mr-4 w-full 
+						{isActive ? 'text-red-500' : 'text-slate-600 hover:text-slate-400'}"
+					>
+						{link.title}
+					</p>
+				</a>
 			{/each}
 		{/each}
 	</div>
@@ -57,7 +77,10 @@
 <div class="w-full overflow-y-scroll">
 	<!-- Navbar -->
 	<nav class="flex items-center justify-end min-w-full h-14 px-6 bg-slate-50">
-		<button class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-200" >
+		<button
+			class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-200"
+			on:click={() => isOpen = !isOpen}	
+		>
 			<Fa class="text-lg text-slate-500" icon={faBars} />
 		</button>
 		<h1 class="md:hidden grow text-slate-500 text-center font-semibold text-sx uppercase">

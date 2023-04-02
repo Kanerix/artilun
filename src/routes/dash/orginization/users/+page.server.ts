@@ -1,7 +1,7 @@
 import prisma from '$lib/server/prisma'
 import { OrginizationRole } from '@prisma/client'
 import { fail, redirect } from '@sveltejs/kit'
-import z, { type ZodIssue } from 'zod'
+import { z, type ZodIssue } from 'zod'
 import type { PageServerLoad } from './$types'
 
 interface UserTableData {

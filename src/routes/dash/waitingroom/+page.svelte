@@ -63,7 +63,6 @@
 			<Button
 				type="submit"
 				text="Create"
-				class="bg-slate-800"
 			/>
 		</form>
 		{#if form?.issues}

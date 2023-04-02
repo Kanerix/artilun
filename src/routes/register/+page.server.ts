@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit'
 import { Prisma, type User } from '@prisma/client'
-import z, { type ZodIssue } from 'zod'
+import { z, type ZodIssue } from 'zod'
 import bcrypt from 'bcrypt'
 import prisma from '$lib/server/prisma'
 import { env } from '$lib/server/env'

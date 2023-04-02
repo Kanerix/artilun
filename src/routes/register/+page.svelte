@@ -49,7 +49,7 @@
 					name="password"
 				/>
 				<Button
-					class="col-span-2 bg-slate-800"
+					class="col-span-2"
 					text="Sign Up"
 					type="sumbit"
 				/>

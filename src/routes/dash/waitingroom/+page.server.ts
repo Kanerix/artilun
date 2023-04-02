@@ -1,4 +1,4 @@
-import z, { type ZodIssue } from 'zod'
+import { z, type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
 import { fail, redirect } from '@sveltejs/kit'
 import type { LayoutServerLoad } from '../$types'
