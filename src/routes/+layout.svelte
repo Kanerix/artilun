@@ -3,8 +3,6 @@
 	import '../app.css'
 </script>
 
-<div class="flex direction-col h-screen">
-	<slot/>
-</div>
+<slot/>
 
 <Toaster />

@@ -2,7 +2,7 @@ import prisma from '$lib/server/prisma'
 import { OrginizationRole } from '@prisma/client'
 import { fail, redirect } from '@sveltejs/kit'
 import z, { type ZodIssue } from 'zod'
-import type { LayoutServerLoad } from '../../$types'
+import type { PageServerLoad } from './$types'
 
 interface UserTableData {
 	id: number
@@ -22,7 +22,7 @@ interface LoadData {
 	invites: UserInvite[]
 }
 
-export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
+export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 	const user = event.locals.user
 	if (!user.orginization) {
 		throw redirect(302, '/dash/waitingroom')
@@ -69,8 +69,9 @@ export const load: LayoutServerLoad = (async (event): Promise<LoadData> => {
 		email: invite.user.email,
 	}))
 
-	event.depends('user:kick')
+	event.depends('invite:send')
 	event.depends('invite:cancel')
+	event.depends('user:kick')
 
 	return {
 		userTableData: users as UserTableData[],

@@ -9,7 +9,11 @@
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" class="bg-slate-200 w-full h-screen">
-		<div>%sveltekit.body%</div>
+	<body
+		data-sveltekit-preload-data="hover"
+		style="overflow: overlay"
+		class="flex direction-col bg-slate-200 h-screen w-full"
+	>
+		%sveltekit.body%
 	</body>
 </html>

@@ -2,6 +2,7 @@
 	import toast from 'svelte-french-toast';
     import type { ActionData, PageData } from './$types';
     import { page } from '$app/stores';
+    import { invalidate } from '$app/navigation';
     import Button from '../../../../components/Button.svelte';
     import FormError from '../../../../components/FormError.svelte';
     import Input from '../../../../components/Input.svelte';
@@ -10,7 +11,7 @@
     import PaperBody from '../../../../components/PaperBody.svelte';
     import TableData from '../../../../components/TableData.svelte';
     import TableHead from '../../../../components/TableHead.svelte';
-    import { invalidate } from '$app/navigation';
+    import { applyAction, deserialize } from '$app/forms';
 	
 	export let form: ActionData
 	export let data: PageData
@@ -49,7 +50,7 @@
 					body: JSON.stringify({ id })
 				})
 
-				invalidate('invite:cancel')
+				await invalidate('invite:cancel')
 
 				if (response.ok) {
 					fufill(response)
@@ -64,6 +65,38 @@
 			}
 		);
 	}
+
+	async function inviteUser(event: Event) {
+		toast.promise(
+			new Promise(async (fufill, reject) => {
+				const form = event.target as HTMLFormElement
+				const data = new FormData(form);
+				const request = fetch(form.action, {
+					method: 'POST',
+					body: data
+				});
+
+				const response = await request
+				const result = deserialize(await response.text());
+
+				await invalidate('invite:send')
+
+				if (result.type === 'success') {
+					fufill(result)
+				} else {
+					reject(result)
+				}
+
+				applyAction(result);
+			}),
+			{
+				loading: 'Inviting...',
+				success: 'User has been invited!',
+				error: 'Could not invite the user.',
+			}
+		);
+
+	}
 </script>
 
 <Paper class="lg:col-span-8 col-span-12">
@@ -74,6 +107,7 @@
 		<form
 			class="flex"
 			method="POST"
+			on:submit|preventDefault={inviteUser}
 		>
 			<Input
 				class="grow mr-6"

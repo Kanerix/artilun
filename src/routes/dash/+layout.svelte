@@ -54,7 +54,7 @@
 	</div>
 </nav>
 
-<div class="w-full">
+<div class="w-full overflow-y-scroll">
 	<!-- Navbar -->
 	<nav class="flex items-center justify-end min-w-full h-14 px-6 bg-slate-50">
 		<button class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-200" >

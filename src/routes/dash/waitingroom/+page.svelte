@@ -26,7 +26,7 @@
 					body: JSON.stringify({ id })
 				})
 
-				invalidate('invite:accept')
+				await invalidate('invite:accept')
 
 				if (response.ok) {
 					fufill(response)
