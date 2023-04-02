@@ -1,4 +1,6 @@
 <script lang="ts">
+	export let color: Color = 'white'
+
 	type Color = 'white' | 'background' | 'error'
 
 	function colorToCSS(color: Color) {
@@ -11,10 +13,8 @@
 				return 'bg-red-500'
 		}
 	}
-
-	export let color: Color = 'white'
 </script>
 
-<div {...$$props} class={`${colorToCSS(color)} shadow-xl rounded overflow-hidden ${$$props.class}`}>
+<div {...$$props} class="{colorToCSS(color)} shadow-xl rounded overflow-hidden {$$props.class}">
 	<slot/>
 </div>

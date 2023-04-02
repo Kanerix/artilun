@@ -129,7 +129,7 @@
 <Paper class="lg:col-span-4 col-span-12">
 	<PaperHeader header="Invited users" />
 	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200 {$$props.class}">
+		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 			<tr>
 				{#each ["Email", "Action"] as header}
 					<TableHead>
@@ -167,7 +167,7 @@
 <Paper class="col-span-12">
 	<PaperHeader header="Users in your orginization" />
 	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200 {$$props.class}">
+		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 			<tr>
 				{#each ["First name", "Last name", "Email", "Role", "Action"] as header}
 					<TableHead>
@@ -180,7 +180,7 @@
 			<tbody>
 				{#if data.userTableData.length === 0}
 				<tr>
-					<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+					<td colspan=5 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
 						No users
 					</td>
 				</tr>

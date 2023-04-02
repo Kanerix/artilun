@@ -2,10 +2,15 @@ import { redirect } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { PageServerLoad } from './$types'
 
+interface Subject {
+	id: number
+	name: string
+}
+
 interface LoadData {
 	usersCount: number
-	subjectsCount: number
 	lessonsCount: number
+	subjects: Subject[]
 }
 
 export const load: PageServerLoad = (async (event): Promise<LoadData> => {
@@ -15,11 +20,8 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 	}
 
 
-	const [usersCount, subjectsCount, lessonsCount] = await prisma.$transaction([
+	const [usersCount, lessonsCount, subjects] = await prisma.$transaction([
 		prisma.orginizationUser.count({
-			where: { orginizationId: user.orginization.id }
-		}),
-		prisma.subject.count({
 			where: { orginizationId: user.orginization.id }
 		}),
 		prisma.lesson.count({
@@ -28,12 +30,15 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 					orginizationId: user.orginization.id
 				}
 			}
-		})
+		}),
+		prisma.subject.findMany({
+			where: { orginizationId: user.orginization.id }
+		}),
 	])
 
 	return {
 		usersCount,
-		subjectsCount,
-		lessonsCount
+		lessonsCount,
+		subjects
 	}
 })

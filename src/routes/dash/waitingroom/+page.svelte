@@ -76,7 +76,7 @@
 		header="Orginization invites"
 	/>
 	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200 {$$props.class}">
+		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 			<tr>
 				{#each ["Orginization", "Action"] as header}
 					<TableHead>

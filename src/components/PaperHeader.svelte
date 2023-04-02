@@ -2,7 +2,7 @@
 	export let header: string
 	export let variant: "title" | "subtitle" = "title"
 
-	let classMap = {
+	const classMap = {
 		title: "text-lg",
 		subtitle: "text-sm"
 	}
