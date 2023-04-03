@@ -27,7 +27,10 @@
 </script>
 
 <!-- Sidebar -->
-<nav class="{isOpen ? 'absolute' : 'hidden'} md:shadow-none shadow-md px-6 py-4 min-h-screen w-[16rem] bg-white">
+<nav
+	class="{isOpen ? 'relative' : 'hidden'} md:block shadow-md
+	px-6 py-4 min-h-screen w-[16rem] bg-white"
+>
 	<div class="flex flex-col">
 		<h1 class="text-sm font-semibold text-slate-500 uppercase my-4">
 			Artilun
