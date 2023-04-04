@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
-import { env } from '$lib/server/env'
 import type { OrginizationRole, User } from '@prisma/client'
 import type { RequestEvent } from '@sveltejs/kit'
 import prisma from './prisma'
 import redis from './redis'
+import { JWT_SECRET } from '$env/static/private'
 
 export interface CustomUserJwtPayload extends jwt.JwtPayload {
 	id: number
@@ -53,11 +53,11 @@ export async function generateToken(user: User): Promise<string> {
 		}
 	}
 
-	return jwt.sign(payload, env.JWT_SECRET, { expiresIn: '15m' })
+	return jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' })
 }
 
 export function verifyToken(token: string): CustomUserJwtPayload {
-	return <CustomUserJwtPayload>jwt.verify(token, env.JWT_SECRET)
+	return <CustomUserJwtPayload>jwt.verify(token, JWT_SECRET)
 }
 
 export function decodeToken(token: string): CustomUserJwtPayload {

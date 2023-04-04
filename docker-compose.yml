@@ -1,6 +1,18 @@
 version: '3.9'
 
 services:
+  app:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env.production
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+      - redis
+
   postgres:
     image: postgres:latest
     restart: always
@@ -10,7 +22,8 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./postgres:/docker-entrypoint-initdb.d/
+      - postgres:/postgres
+
   redis:
     image: redis:latest
     restart: always
@@ -19,8 +32,11 @@ services:
     ports:
       - '6379:6379'
     volumes: 
-      - redis:/data
+      - redis:/redis
+
 volumes:
   redis:
+    driver: local
+  postgres:
     driver: local
 

@@ -3,8 +3,8 @@ import { Prisma, type User } from '@prisma/client'
 import { z, type ZodIssue } from 'zod'
 import bcrypt from 'bcrypt'
 import prisma from '$lib/server/prisma'
-import { env } from '$lib/server/env'
 import type { Actions } from '../register/$types'
+import { SALT_ROUNDS } from '$env/static/private'
 
 const userRegisterSchema = z.object({
 	firstName: z.string().min(2).max(255),
@@ -27,7 +27,7 @@ export const actions = {
 		}
 
 		// Hash password
-		const salt = await bcrypt.genSalt(parseInt(env.SALT_ROUNDS))
+		const salt = await bcrypt.genSalt(parseInt(SALT_ROUNDS))
 		result.data.password = await bcrypt.hash(result.data.password, salt)
 
 		// Create user in the database

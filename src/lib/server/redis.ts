@@ -1,8 +1,8 @@
+import { REDIS_URL } from '$env/static/private'
 import { createClient } from 'redis'
-import { env } from './env'
 
 const redis = createClient({
-	url: env.REDIS_URL
+	url: REDIS_URL
 })
 
 await redis.connect()

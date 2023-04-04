@@ -1,7 +1,9 @@
-Dockerfile
+node_modules
+prisma/migrate
+.dockerignore
 .eslintrc.cjs
 .gitignore
-postgres
-prisma/migrate
-node_modules
-.svelte-kit
+docker-compose.yml
+Dockerfile
+README.md
+.env
