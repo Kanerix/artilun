@@ -115,11 +115,7 @@
 				label="email"
 				name="email"
 			/>
-			<Button
-				type="submit"
-				text="Invite"
-				class="bg-slate-800"
-			/>
+			<Button type="submit" text="Invite" />
 		</form>
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} class="mt-4" />
@@ -142,7 +138,7 @@
 			<tbody>
 				{#if data.invites.length === 0}
 					<TableRow border={false}>
-						<TableData colspan="2" class="text-center">
+						<TableData colspan=2 class="text-center">
 							No active invites
 						</TableData>
 					</TableRow>
@@ -181,7 +177,7 @@
 			<tbody>
 				{#if data.userTableData.length === 0}
 				<TableRow border={false}>
-					<TableData colspan="5" class="text-center">
+					<TableData colspan=5 class="text-center">
 						No users
 					</TableData>
 				</TableRow>

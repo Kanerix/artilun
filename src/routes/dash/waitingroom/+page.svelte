@@ -11,6 +11,7 @@
     import TableHead from '../../../components/TableHead.svelte'
     import PaperBody from '../../../components/PaperBody.svelte'
     import { invalidate } from '$app/navigation'
+    import TableRow from '../../../components/TableRow.svelte';
 
 	export let form: ActionData
 	export let data: PageData
@@ -74,38 +75,37 @@
 	<PaperHeader
 		header="Orginization invites"
 	/>
-	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
-			<tr>
-				{#each ['Orginization', 'Action'] as header}
-					<TableHead>
-						{header}	
-					</TableHead>
-				{/each}
-			</tr>
-		</thead>
-		{#if page}
+	{#if page}
+		<table class="pt-4 pb-6 px-6 w-full">
+			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
+				<TableRow>
+					{#each ['Orginization', 'Action'] as header}
+						<TableHead>
+							{header}	
+						</TableHead>
+					{/each}
+				</TableRow>
+			</thead>
 			<tbody>
 				{#if data.invites.length === 0}
-					<td colspan="2" class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+					<TableData colspan=2 class="text-center">
 						No invites
-					</td>
+					</TableData>
 				{/if}
 				{#each data.invites as invite}
-					<tr>
+					<TableRow>
 						<TableData>
 							{invite.orginization.name}
 						</TableData>
 						<TableData>
 							<Button
 								text="Accept"
-								class="bg-slate-800"
 								on:click={() => acceptInvite(invite.id)}
 							/>
 						</TableData>
-					</tr>
+					</TableRow>
 				{/each}
 			</tbody>
-		{/if}
-	</table>
+		</table>
+	{/if}
 </Paper>
