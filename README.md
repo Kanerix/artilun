@@ -21,7 +21,9 @@ Steps needed to start website in development mode.
 
 - Run `pnpm install` to install node modules.
 
-- Run `prisma migrate dev` and `prisma generate` to setup database.
+- Run `pnpm prisma migrate dev` and `pnpm prisma generate` to setup database.
+
+- **OPTIONAL:** Run `pnpm prisma db seed`, to seed the database with data. 
 
 - Finally run `pnpm dev` to start the website in development mode.
 
@@ -31,7 +33,7 @@ Steps needed to start website in production mode.
 
 - Run `pnpm install` to install node modules.
 
-- Run `prisma migrate dev` and `prisma generate` to setup database.
+- Run `pnpm prisma migrate dev` and `pnpm prisma generate` to setup database.
 
 - Run `pnpm build` to build the application.
 

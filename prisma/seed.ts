@@ -121,6 +121,32 @@ async function main() {
 		],
 		skipDuplicates: true,	
 	})
+
+	await prisma.subject.createMany({
+		data: [
+			{
+				name: 'Math',
+				orginizationId: orginization[0].id
+			},
+			{
+				name: 'English',
+				orginizationId: orginization[0].id
+			},
+			{
+				name: 'Physics',
+				orginizationId: orginization[0].id
+			},
+			{
+				name: 'Progamming',
+				orginizationId: orginization[0].id
+			},
+			{
+				name: 'Digital Design',
+				orginizationId: orginization[0].id
+			}
+		],
+		skipDuplicates: true
+	})
 }
 
 

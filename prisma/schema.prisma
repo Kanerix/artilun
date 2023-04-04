@@ -69,6 +69,7 @@ model OrginizationIvite {
   orginization       Orginization     @relation(fields: [orginizationId], references: [id])
   userId             Int
   user               User             @relation(fields: [userId], references: [id])
+  @@unique([orginizationId, userId], name: "orginizationUserIdentifier")
 }
 
 model Subject {
@@ -80,6 +81,7 @@ model Subject {
   orginization   Orginization    @relation(fields: [orginizationId], references: [id])
   standTemplates StandTemplate[]
   lessons        Lesson[]
+  @@unique([orginizationId, name], name: "orginizationIdentifier")
 }
 
 model Lesson {

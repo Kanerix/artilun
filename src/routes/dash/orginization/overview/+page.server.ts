@@ -2,6 +2,7 @@ import { fail, redirect } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { PageServerLoad } from './$types'
 import { z, type ZodIssue } from 'zod'
+import { Prisma } from '@prisma/client'
 
 interface Subject {
 	id: number
@@ -71,22 +72,6 @@ export const actions = {
 		}
 		
 		try {
-			const subject = await prisma.subject.findFirst({
-				where: {
-					name: result.data.subject,
-					orginizationId: user.orginization.id
-				},
-				select: {
-					id: true
-				}
-			})
-
-			if (subject) {
-				return fail(409, {
-					issues: [{ message: 'Subject already exists' }] as ZodIssue[]
-				})
-			}
-
 			await prisma.subject.create({
 				data: {
 					name: result.data.subject,
@@ -94,6 +79,14 @@ export const actions = {
 				}
 			})
 		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				if (e.code === 'P2002') {
+					return fail(409, {
+						issues: [{ message: 'Subject already exists' }] as ZodIssue[]
+					})
+				}
+			}
+
 			return fail(500, {
 				issues: [{ message: 'Internal server error' }] as ZodIssue[]
 			})

@@ -1,5 +1,5 @@
 import prisma from '$lib/server/prisma'
-import { OrginizationRole } from '@prisma/client'
+import { OrginizationRole, Prisma } from '@prisma/client'
 import { fail, redirect } from '@sveltejs/kit'
 import { z, type ZodIssue } from 'zod'
 import type { PageServerLoad } from './$types'
@@ -118,22 +118,9 @@ export const actions = {
 						select: {
 							userId: true
 						}
-					},
-					orginizationInvites: {
-						select: {
-							userId: true
-						}
 					}
 				}
 			})
-
-			if (invitedUser?.orginizationInvites.filter(
-				(invite) => invite.userId === invitedUser.id
-			).length) {
-				return fail(404, {
-					issues: [{ 'message': 'User already invited' }] as ZodIssue[]
-				})
-			}
 
 			if (!invitedUser) {
 				return fail(404, {
@@ -162,6 +149,13 @@ export const actions = {
 				}
 			})
 		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				if (e.code === 'P2002') {
+					return fail(404, {
+						issues: [{ 'message': 'User already invited' }] as ZodIssue[]
+					})
+				}
+			}
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
