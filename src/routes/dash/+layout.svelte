@@ -5,12 +5,12 @@
 		Menu,
 		MenuButton,
 		MenuItems,
-	} from "@rgossiaux/svelte-headlessui";
+	} from '@rgossiaux/svelte-headlessui'
 	import type { LayoutData } from './$types'
-    import { invalidate } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { invalidate } from '$app/navigation'
+    import { page } from '$app/stores'
 	import Divider from '../../components/Divider.svelte'
-    import Button from '../../components/Button.svelte';
+    import Button from '../../components/Button.svelte'
 
 	export let data: LayoutData
 
@@ -57,7 +57,7 @@
 			{#each pages as link}
 				{@const isActive = $page.url.pathname === link.href}
 				<a
-					href="{link.href}"
+					href={link.href}
 					class="flex items-center w-full mb-4" 
 					on:click={() => isOpen = !isOpen}	
 				>

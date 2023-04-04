@@ -1,21 +1,21 @@
 <script lang="ts">
-    import toast from 'svelte-french-toast';
-    import type { ActionData, PageData } from './$types';
-    import { page } from '$app/stores';
-    import Button from '../../../components/Button.svelte';
-    import FormError from '../../../components/FormError.svelte';
-    import Input from '../../../components/Input.svelte';
-    import Paper from '../../../components/Paper.svelte';
-    import PaperHeader from '../../../components/PaperHeader.svelte';
-    import TableData from '../../../components/TableData.svelte';
-    import TableHead from '../../../components/TableHead.svelte';
-    import PaperBody from '../../../components/PaperBody.svelte';
-    import { invalidate } from '$app/navigation';
+    import toast from 'svelte-french-toast'
+    import type { ActionData, PageData } from './$types'
+    import { page } from '$app/stores'
+    import Button from '../../../components/Button.svelte'
+    import FormError from '../../../components/FormError.svelte'
+    import Input from '../../../components/Input.svelte'
+    import Paper from '../../../components/Paper.svelte'
+    import PaperHeader from '../../../components/PaperHeader.svelte'
+    import TableData from '../../../components/TableData.svelte'
+    import TableHead from '../../../components/TableHead.svelte'
+    import PaperBody from '../../../components/PaperBody.svelte'
+    import { invalidate } from '$app/navigation'
 
 	export let form: ActionData
 	export let data: PageData
 
-	async function acceptInvite(id: number) {
+	function acceptInvite(id: number) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/invite/accept', {
@@ -40,7 +40,7 @@
 				success: 'You joined the orginization!',
 				error: 'Could not join the orginization.',
 			}
-		);
+		)
 	}
 </script>
 
@@ -77,7 +77,7 @@
 	<table class="pt-4 pb-6 px-6 w-full">
 		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 			<tr>
-				{#each ["Orginization", "Action"] as header}
+				{#each ['Orginization', 'Action'] as header}
 					<TableHead>
 						{header}	
 					</TableHead>
@@ -87,7 +87,7 @@
 		{#if page}
 			<tbody>
 				{#if data.invites.length === 0}
-					<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+					<td colspan="2" class="py-4 text-slate-500 text-center text-sm text-ellipsis">
 						No invites
 					</td>
 				{/if}

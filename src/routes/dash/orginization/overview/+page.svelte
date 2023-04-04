@@ -1,37 +1,37 @@
 <script lang="ts">
-    import { applyAction, deserialize } from '$app/forms';
-    import { invalidate } from '$app/navigation';
-    import { page } from '$app/stores';
-    import toast from 'svelte-french-toast';
-    import type { ActionData, PageData } from './$types';
-    import Button from '../../../../components/Button.svelte';
-    import Input from '../../../../components/Input.svelte';
-    import Paper from '../../../../components/Paper.svelte';
-    import PaperBody from '../../../../components/PaperBody.svelte';
-    import PaperHeader from '../../../../components/PaperHeader.svelte';
-    import StatCard from '../../../../components/StatCard.svelte';
-    import TableData from '../../../../components/TableData.svelte';
-    import TableHead from '../../../../components/TableHead.svelte';
-    import FormError from '../../../../components/FormError.svelte';
-    import Fa from 'svelte-fa';
-    import { faClose } from '@fortawesome/free-solid-svg-icons';
-    import TableRow from '../../../../components/TableRow.svelte';
+    import { applyAction, deserialize } from '$app/forms'
+    import { invalidate } from '$app/navigation'
+    import { page } from '$app/stores'
+    import toast from 'svelte-french-toast'
+    import type { ActionData, PageData } from './$types'
+    import Button from '../../../../components/Button.svelte'
+    import Input from '../../../../components/Input.svelte'
+    import Paper from '../../../../components/Paper.svelte'
+    import PaperBody from '../../../../components/PaperBody.svelte'
+    import PaperHeader from '../../../../components/PaperHeader.svelte'
+    import StatCard from '../../../../components/StatCard.svelte'
+    import TableData from '../../../../components/TableData.svelte'
+    import TableHead from '../../../../components/TableHead.svelte'
+    import FormError from '../../../../components/FormError.svelte'
+    import Fa from 'svelte-fa'
+    import { faClose } from '@fortawesome/free-solid-svg-icons'
+    import TableRow from '../../../../components/TableRow.svelte'
 
 	export let data: PageData
 	export let form: ActionData
 
-	async function addSubject(event: Event) {
+	function addSubject(event: Event) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const form = event.target as HTMLFormElement
-				const data = new FormData(form);
+				const data = new FormData(form)
 				const request = fetch(form.action, {
 					method: 'POST',
 					body: data
-				});
+				})
 
 				const response = await request
-				const result = deserialize(await response.text());
+				const result = deserialize(await response.text())
 
 				await invalidate('subject:add')
 
@@ -41,23 +41,23 @@
 					reject(result)
 				}
 
-				applyAction(result);
+				applyAction(result)
 			}),
 			{
 				loading: 'Adding...',
 				success: 'Subject has been added!',
 				error: 'Could not add the subject.',
 			}
-		);
+		)
 	}
 
-	async function removeSubject(id: number) {
+	function removeSubject(id: number) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/subject/remove', {
 					method: 'POST',
 					body: JSON.stringify({ id })
-				});
+				})
 
 				await invalidate('subject:remove')
 
@@ -72,7 +72,7 @@
 				success: 'Subject has been removed!',
 				error: 'Could not remove the subject.',
 			}
-		);
+		)
 	}
 </script>
 
@@ -104,7 +104,7 @@
 		<table class="pt-4 pb-6 px-6 w-full">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
-					{#each ["Name"] as header}
+					{#each ['Name'] as header}
 						<TableHead>
 							{header}
 						</TableHead>
@@ -114,7 +114,7 @@
 			<tbody>
 				{#if data.subjects.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No subjects 
 						</TableData>
 					</TableRow>

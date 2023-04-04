@@ -1,23 +1,23 @@
 <script lang="ts">
-	import toast from 'svelte-french-toast';
-    import type { ActionData, PageData } from './$types';
-    import { page } from '$app/stores';
-    import { invalidate } from '$app/navigation';
-    import Button from '../../../../components/Button.svelte';
-    import FormError from '../../../../components/FormError.svelte';
-    import Input from '../../../../components/Input.svelte';
+	import toast from 'svelte-french-toast'
+    import type { ActionData, PageData } from './$types'
+    import { page } from '$app/stores'
+    import { invalidate } from '$app/navigation'
+    import Button from '../../../../components/Button.svelte'
+    import FormError from '../../../../components/FormError.svelte'
+    import Input from '../../../../components/Input.svelte'
 	import Paper from '../../../../components/Paper.svelte'
-    import PaperHeader from '../../../../components/PaperHeader.svelte';
-    import PaperBody from '../../../../components/PaperBody.svelte';
-    import TableData from '../../../../components/TableData.svelte';
-    import TableHead from '../../../../components/TableHead.svelte';
-    import { applyAction, deserialize } from '$app/forms';
-    import TableRow from '../../../../components/TableRow.svelte';
+    import PaperHeader from '../../../../components/PaperHeader.svelte'
+    import PaperBody from '../../../../components/PaperBody.svelte'
+    import TableData from '../../../../components/TableData.svelte'
+    import TableHead from '../../../../components/TableHead.svelte'
+    import { applyAction, deserialize } from '$app/forms'
+    import TableRow from '../../../../components/TableRow.svelte'
 	
 	export let form: ActionData
 	export let data: PageData
 
-	async function kickUser(id: number) {
+	function kickUser(id: number) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/kick', {
@@ -39,10 +39,10 @@
 				success: 'User has been kicked!',
 				error: 'Could not kick the user.',
 			}
-		);
+		)
 	}
 
-	async function cancelInvite(id: number) {
+	function cancelInvite(id: number) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const response = await fetch('/api/orginization/invite/cancel', {
@@ -64,21 +64,21 @@
 				success: 'Invite has been canceled!',
 				error: 'Could not cancel the invite.',
 			}
-		);
+		)
 	}
 
-	async function inviteUser(event: Event) {
+	function inviteUser(event: Event) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
 				const form = event.target as HTMLFormElement
-				const data = new FormData(form);
+				const data = new FormData(form)
 				const request = fetch(form.action, {
 					method: 'POST',
 					body: data
-				});
+				})
 
 				const response = await request
-				const result = deserialize(await response.text());
+				const result = deserialize(await response.text())
 
 				await invalidate('invite:send')
 
@@ -88,14 +88,14 @@
 					reject(result)
 				}
 
-				applyAction(result);
+				applyAction(result)
 			}),
 			{
 				loading: 'Inviting...',
 				success: 'User has been invited!',
 				error: 'Could not invite the user.',
 			}
-		);
+		)
 	}
 </script>
 
@@ -132,7 +132,7 @@
 		<table class="pt-4 pb-6 px-6 w-full">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<tr>
-					{#each ["Email", "Action"] as header}
+					{#each ['Email', 'Action'] as header}
 						<TableHead>
 							{header}
 						</TableHead>
@@ -142,7 +142,7 @@
 			<tbody>
 				{#if data.invites.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No active invites
 						</TableData>
 					</TableRow>
@@ -171,7 +171,7 @@
 		<table class="pt-4 pb-6 px-6 w-full">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
-					{#each ["First name", "Last name", "Email", "Role", "Action"] as header}
+					{#each ['First name', 'Last name', 'Email', 'Role', 'Action'] as header}
 						<TableHead>
 							{header}
 						</TableHead>
@@ -181,7 +181,7 @@
 			<tbody>
 				{#if data.userTableData.length === 0}
 				<TableRow border={false}>
-					<TableData colspan=5 class="text-center">
+					<TableData colspan="5" class="text-center">
 						No users
 					</TableData>
 				</TableRow>

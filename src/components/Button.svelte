@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let text: string = 'default'
+	export let text = 'default'
 	export let color: Color = 'default'
 
 	type Color = 'default' | 'error'
