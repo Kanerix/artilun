@@ -68,8 +68,8 @@ async function main() {
 		skipDuplicates: true
 	})
 
-	const orginization = await prisma.orginization.findMany({})
 	const users = await prisma.user.findMany({})
+	const orginization = await prisma.orginization.findMany({})
 
 	await prisma.orginizationUser.createMany({
 		data: [
@@ -144,6 +144,112 @@ async function main() {
 				name: 'Digital Design',
 				orginizationId: orginization[0].id
 			}
+		],
+		skipDuplicates: true
+	})
+
+	const subjects = await prisma.subject.findMany({})
+
+	await prisma.standTemplate.createMany({
+		data: [
+			{
+				name: 'Standard math lessons',
+				subjectId: subjects[0].id,
+				userId: users[0].id,
+			},
+			{
+				name: 'Maple lessons',
+				subjectId: subjects[0].id,
+				userId: users[0].id,
+			}
+		],
+		skipDuplicates: true
+	})
+
+	const templates = await prisma.standTemplate.findMany({})
+
+	await prisma.standQuestion.createMany({
+		data: [
+			{
+				standTemplateId: templates[0].id,
+				question: 'Did you like todays lesson?',
+			},
+			{
+				standTemplateId: templates[0].id,
+				question: 'Did you learn something from the video we watched today?',
+			},
+			{
+				standTemplateId: templates[0].id,
+				question: 'Did you find the tool we used today useful?',
+			}
+		],
+		skipDuplicates: true	
+	})
+
+	const questions = await prisma.standQuestion.findMany({})
+
+	await prisma.questionAnwser.createMany({
+		data: [
+			{
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 5),
+			},
+			{
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 5),
+			},
 		],
 		skipDuplicates: true
 	})

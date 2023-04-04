@@ -24,7 +24,6 @@ model User {
   orginizationUser    OrginizationUser?
   strandTemplates     StandTemplate[]
   refreshTokens       RefreshToken[]
-  stands              Stand[]
   lessons             Lesson[]
   orginizationInvites OrginizationIvite[]
 }
@@ -45,7 +44,6 @@ model Orginization {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @default(now()) @updatedAt
   users             OrginizationUser[]
-  stands            Stand[]
   subjects          Subject[]
   OrginizationIvite OrginizationIvite[]
 }
@@ -95,17 +93,6 @@ model Lesson {
   subject   Subject  @relation(fields: [subjectId], references: [id])
 }
 
-model Stand {
-  id             Int          @id @default(autoincrement())
-  name           String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @default(now()) @updatedAt
-  orginizationId Int
-  orginization   Orginization @relation(fields: [orginizationId], references: [id])
-  userId         Int
-  user           User         @relation(fields: [userId], references: [id])
-}
-
 model StandTemplate {
   id        Int             @id @default(autoincrement())
   name      String
@@ -116,6 +103,7 @@ model StandTemplate {
   subjectId Int
   subject   Subject         @relation(fields: [subjectId], references: [id])
   questions StandQuestion[]
+  @@unique([userId, name], name: "standTemplateIdentifier")
 }
 
 model StandQuestion {
@@ -126,11 +114,12 @@ model StandQuestion {
   standTemplateId Int
   standTemplate   StandTemplate    @relation(fields: [standTemplateId], references: [id])
   answers         QuestionAnwser[]
+  @@unique([standTemplateId, question], name: "questionIdentifier")
 }
 
 model QuestionAnwser {
   id         Int           @id @default(autoincrement())
-  answer     Int
+  rating     Int
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @default(now()) @updatedAt
   questionId Int
