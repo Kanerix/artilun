@@ -1,38 +1,44 @@
-# create-svelte
+# Artilun
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is a app used to evaluate school lessons. It is created as a school project. This is my first Svelte app, so the code is probably not the best.
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
+### Steps needed no matter what
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Install node if not installed.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- Create a `.env.development` or/and `.env.proudction` file, following the `.env.example`.
 
-## Developing
+- Install `pnpm` if not installed.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Development
 
-```bash
-npm run dev
+Steps needed to start website in development mode.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- Install docker if not installed.
 
-## Building
+- Run `docker compose up postgres redis -d` to start the postgres and redis service.
 
-To create a production version of your app:
+- Run `pnpm install` to install node modules.
 
-```bash
-npm run build
-```
+- Run `prisma migrate dev` and `prisma generate` to setup database.
 
-You can preview the production build with `npm run preview`.
+- Finally run `pnpm dev` to start the website in development mode.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+### Production
+
+Steps needed to start website in production mode.
+
+- Run `pnpm install` to install node modules.
+
+- Run `prisma migrate dev` and `prisma generate` to setup database.
+
+- Run `pnpm build` to build the application.
+
+- Finally run `node build` to start the website.
+
+#### Docker compose
+
+Steps needed to start the docker environment.
+
+- Run `docker compose up -d` to run the environment in the background.
