@@ -12,6 +12,7 @@
     import TableData from '../../../../components/TableData.svelte';
     import TableHead from '../../../../components/TableHead.svelte';
     import { applyAction, deserialize } from '$app/forms';
+    import TableRow from '../../../../components/TableRow.svelte';
 	
 	export let form: ActionData
 	export let data: PageData
@@ -127,27 +128,27 @@
 </Paper>
 <Paper class="lg:col-span-4 col-span-12">
 	<PaperHeader header="Invited users" />
-	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
-			<tr>
-				{#each ["Email", "Action"] as header}
-					<TableHead>
-						{header}
-					</TableHead>
-				{/each}
-			</tr>
-		</thead>
-		{#if page}
+	{#if page}
+		<table class="pt-4 pb-6 px-6 w-full">
+			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
+				<tr>
+					{#each ["Email", "Action"] as header}
+						<TableHead>
+							{header}
+						</TableHead>
+					{/each}
+				</tr>
+			</thead>
 			<tbody>
 				{#if data.invites.length === 0}
-					<tr>
-						<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+					<TableRow border={false}>
+						<TableData colspan=2 class="text-center">
 							No active invites
-						</td>
-					</tr>
+						</TableData>
+					</TableRow>
 				{/if}
-				{#each data.invites as invite}
-					<tr>
+				{#each Object.entries(data.invites) as [i, invite]}
+					<TableRow border={data.invites.length-1 !== parseInt(i)}>
 						<TableData>
 							{invite.email}
 						</TableData>
@@ -158,35 +159,35 @@
 								on:click={() => cancelInvite(invite.id)}
 							/>
 						</TableData>
-					</tr>
+					</TableRow>
 				{/each}
 			</tbody>
-		{/if}
-	</table>
+		</table>
+	{/if}
 </Paper>
 <Paper class="col-span-12">
 	<PaperHeader header="Users in your orginization" />
-	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
-			<tr>
-				{#each ["First name", "Last name", "Email", "Role", "Action"] as header}
-					<TableHead>
-						{header}
-					</TableHead>
-				{/each}
-			</tr>
-		</thead>
-		{#if page}
+	{#if page}
+		<table class="pt-4 pb-6 px-6 w-full">
+			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
+				<TableRow>
+					{#each ["First name", "Last name", "Email", "Role", "Action"] as header}
+						<TableHead>
+							{header}
+						</TableHead>
+					{/each}
+				</TableRow>
+			</thead>
 			<tbody>
 				{#if data.userTableData.length === 0}
-				<tr>
-					<td colspan=5 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+				<TableRow border={false}>
+					<TableData colspan=5 class="text-center">
 						No users
-					</td>
-				</tr>
+					</TableData>
+				</TableRow>
 				{/if}
-				{#each data.userTableData as user}
-					<tr>
+				{#each Object.entries(data.userTableData) as [i, user]}
+					<TableRow border={data.userTableData.length-1 !== parseInt(i)}>
 						<TableData>
 							{user.firstName}
 						</TableData>
@@ -206,9 +207,9 @@
 								on:click={() => kickUser(user.id)}
 							/>
 						</TableData>
-					</tr>
+					</TableRow>
 				{/each}
 			</tbody>
-		{/if}
-	</table>
+		</table>
+	{/if}
 </Paper>

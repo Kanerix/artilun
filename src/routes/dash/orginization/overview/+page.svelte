@@ -15,6 +15,7 @@
     import FormError from '../../../../components/FormError.svelte';
     import Fa from 'svelte-fa';
     import { faClose } from '@fortawesome/free-solid-svg-icons';
+    import TableRow from '../../../../components/TableRow.svelte';
 
 	export let data: PageData
 	export let form: ActionData
@@ -84,7 +85,7 @@
 <StatCard
 	header="Subjects"
 	stat="{data.subjects.length} subjects"
-	description="Active in your orginization"
+	description="Teached in your orginization"
 />
 <StatCard
 	header="Lessons"
@@ -99,27 +100,27 @@
 
 <Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader header="Subjects" />
-	<table class="pt-4 pb-6 px-6 w-full">
-		<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
-			<tr>
-				{#each ["Name"] as header}
-					<TableHead>
-						{header}
-					</TableHead>
-				{/each}
-			</tr>
-		</thead>
-		{#if page}
+	{#if page}
+		<table class="pt-4 pb-6 px-6 w-full">
+			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
+				<TableRow>
+					{#each ["Name"] as header}
+						<TableHead>
+							{header}
+						</TableHead>
+					{/each}
+				</TableRow>
+			</thead>
 			<tbody>
 				{#if data.subjects.length === 0}
-					<tr>
-						<td colspan=2 class="py-4 text-slate-500 text-center text-sm text-ellipsis">
+					<TableRow border={false}>
+						<TableData colspan=2 class="text-center">
 							No subjects 
-						</td>
-					</tr>
+						</TableData>
+					</TableRow>
 				{/if}
-				{#each data.subjects as subject}
-					<tr>
+				{#each Object.entries(data.subjects) as [i, subject]}
+					<TableRow border={data.subjects.length-1 !== parseInt(i)}>
 						<TableData class="flex items-center">
 							<p class="grow">
 								{subject.name}
@@ -131,11 +132,11 @@
 								<Fa icon={faClose} class="m-auto" />
 							</button>
 						</TableData>
-					</tr>
+					</TableRow>
 				{/each}
 			</tbody>
-		{/if}
-	</table>
+		</table>
+	{/if}
 	<PaperBody>
 		<form
 			class="flex mb-4"
