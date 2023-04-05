@@ -115,7 +115,7 @@
 				label="email"
 				name="email"
 			/>
-			<Button type="submit" text="Invite" />
+			<Button type="submit" label="Invite" />
 		</form>
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} class="mt-4" />
@@ -150,7 +150,7 @@
 						</TableData>
 						<TableData>
 							<Button
-								text="Cancel"
+								label="Cancel"
 								color="error"
 								on:click={() => cancelInvite(invite.id)}
 							/>
@@ -198,7 +198,7 @@
 						</TableData>
 						<TableData>
 							<Button
-								text="Kick"
+								label="Kick"
 								color="error"
 								on:click={() => kickUser(user.id)}
 							/>

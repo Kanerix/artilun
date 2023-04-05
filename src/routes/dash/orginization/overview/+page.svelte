@@ -149,7 +149,7 @@
 				label="Subject"
 				name="subject"
 			/>
-			<Button text="Add" type="submit" />
+			<Button label="Add" type="submit" />
 		</form>
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} />

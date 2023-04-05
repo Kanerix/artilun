@@ -50,7 +50,7 @@
 				/>
 				<Button
 					class="col-span-2"
-					text="Sign Up"
+					label="Sign Up"
 					type="sumbit"
 				/>
 			</form>

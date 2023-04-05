@@ -97,7 +97,7 @@
 				<h6 class="text-sm font-semibold text-slate-500 uppercase text-center">
 					User Menu
 				</h6>
-				<Button on:click={logout} class="w-full mt-2" text="Log Out" />
+				<Button on:click={logout} class="w-full mt-2" label="Log Out" />
 			</MenuItems>
 		</Menu>
 	</nav>

@@ -42,8 +42,8 @@
 							{template.name}
 						</TableData>
 						<TableData>
-							<Button text="Edit" />
-							<Button text="Delete" />
+							<Button label="Edit" link href="/dash/general/templates/{template.id}/edit" />
+							<Button label="Delete" />
 						</TableData>
 					</TableRow>
 				{/each}
@@ -58,7 +58,7 @@
 				label="Template"
 				name="template"
 			/>
-			<Button text="Add" type="submit" />
+			<Button label="Add" type="submit" />
 		</form>
 	</PaperBody>
 </Paper>

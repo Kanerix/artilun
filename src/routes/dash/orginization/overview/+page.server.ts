@@ -21,7 +21,6 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		throw redirect(302, '/dash/waitingroom')
 	}
 
-
 	const [usersCount, subjects, lessonsCount] = await prisma.$transaction([
 		prisma.orginizationUser.count({
 			where: { orginizationId: user.orginization.id }

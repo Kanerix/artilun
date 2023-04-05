@@ -38,7 +38,7 @@
 				/>
 				<Button
 					class="col-span-2 text-xs uppercase p-3"
-					text="SignIn"
+					label="SignIn"
 					type="sumbit"
 				/>
 			</form>

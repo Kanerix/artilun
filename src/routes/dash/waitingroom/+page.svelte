@@ -63,7 +63,7 @@
 			/>
 			<Button
 				type="submit"
-				text="Create"
+				label="Create"
 			/>
 		</form>
 		{#if form?.issues}
@@ -99,7 +99,7 @@
 						</TableData>
 						<TableData>
 							<Button
-								text="Accept"
+								label="Accept"
 								on:click={() => acceptInvite(invite.id)}
 							/>
 						</TableData>

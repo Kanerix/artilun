@@ -188,67 +188,170 @@ async function main() {
 
 	const questions = await prisma.standQuestion.findMany({})
 
+	await prisma.lesson.createMany({
+		data: [
+			{
+				id: 1,
+				name: 'Lesson 1',
+				userId: users[0].id,
+				subjectId: subjects[0].id,
+				standTemplateId: templates[0].id,
+			}
+		],
+		skipDuplicates: true
+	})
+
 	await prisma.questionAnwser.createMany({
 		data: [
 			{
+				id: 1,
 				questionId: questions[0].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 2,
 				questionId: questions[1].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 3,
 				questionId: questions[2].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 4,
 				questionId: questions[0].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 5,
 				questionId: questions[1].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 6,
 				questionId: questions[2].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 7,
 				questionId: questions[0].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 8,
 				questionId: questions[1].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 9,
 				questionId: questions[2].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 10,
 				questionId: questions[0].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 11,
 				questionId: questions[1].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 12,
 				questionId: questions[2].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 13,
 				questionId: questions[0].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 14,
 				questionId: questions[1].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 			{
+				id: 15,
 				questionId: questions[2].id,
-				rating: Math.round(Math.random() * 5),
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 16,
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 17,
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 18,
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 19,
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 20,
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 21,
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 22,
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 23,
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 24,
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 25,
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 26,
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 27,
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 28,
+				questionId: questions[0].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 29,
+				questionId: questions[1].id,
+				rating: Math.round(Math.random() * 4) + 1,
+			},
+			{
+				id: 30,
+				questionId: questions[2].id,
+				rating: Math.round(Math.random() * 4) + 1,
 			},
 		],
 		skipDuplicates: true
