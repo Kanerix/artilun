@@ -1,0 +1,35 @@
+{
+	"short_name": "Artilun",
+	"name": "Artilun lesson evaluater",
+	"description": "A website for evaluating lessons",
+	"id": "/",
+	"start_url": "/",
+	"background_color": "#ffffff",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#3367D6",
+	"shortcuts": [
+		{
+			"name": "Home page",
+			"short_name": "Home",
+			"description": "Go to the dashboard home page",
+			"url": "/",
+			"icons": []
+		}
+	],
+	"icons": [
+		{
+			"name": "favicon.png",
+			"src": "/favicon.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"name": "logo.png",
+			"src": "/logo.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"screenshots": []
+}
