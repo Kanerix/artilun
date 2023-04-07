@@ -21,7 +21,7 @@
 		{...$$props}
 		{href}	
 		on:click
-		class="{colorToCSS(color)} text-white font-bold text-xs uppercase p-3 rounded focus:ring-2 shadow-md
+		class="{colorToCSS(color)} text-white text-xs text-center font-bold uppercase p-3 rounded focus:ring-2 shadow-md
 		transition ease-in-out duration-200 hover: {$$props.class}"
 	>
 		{label}
@@ -30,7 +30,7 @@
 	<button
 		{...$$props}
 		on:click
-		class="{colorToCSS(color)} text-white font-bold text-xs uppercase p-3 rounded focus:ring-2 shadow-md
+		class="{colorToCSS(color)} text-white text-xs font-bold uppercase p-3 rounded focus:ring-2 shadow-md
 		transition ease-in-out duration-200 hover: {$$props.class}"
 	>
 		{label}

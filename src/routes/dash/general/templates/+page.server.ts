@@ -1,6 +1,7 @@
-import { redirect } from '@sveltejs/kit'
+import { fail, redirect } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 import prisma from '$lib/server/prisma'
+import { z, type ZodIssue } from 'zod'
 
 interface Template {
 	id: number
@@ -27,3 +28,30 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		templates
 	}
 })
+
+const orginizationTemplateSchema = z.object({
+	name: z.string().min(1).max(50)
+})
+
+export const actions = {
+	default: async (event) => {
+		const data = await event.request.formData()
+		const parseable = Object.fromEntries(data.entries())
+
+		const result = orginizationTemplateSchema.safeParse(parseable)
+		if (!result.success) {
+			return fail(422, {
+				issues: result.error.issues
+			})
+		}
+
+		const user = event.locals.user
+		if (!user.orginization) {
+			return fail(404, {
+				issues: [{ 'message': 'Orginization not found' }] as ZodIssue[]
+			})
+		}
+
+		return { success: true }
+	}
+}
