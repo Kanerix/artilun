@@ -14,7 +14,7 @@
 
 {#if page}
 	{#each Object.values(data.lesson.questions) as question}
-		<Paper class="col-span-6">
+		<Paper class="col-span-12 md:col-span-6">
 			<PaperHeader 
 				header={question.question}
 			/>
