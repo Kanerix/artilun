@@ -1,10 +1,10 @@
 import { fail, redirect } from '@sveltejs/kit'
-import { Prisma, type User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { z, type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
 import { generateToken } from '$lib/server/auth'
 import type { Actions } from '../login/$types'
+import type { User } from '@prisma/client'
 
 const userLoginSchema = z.object({
 	email: z.string().email(),
@@ -33,20 +33,13 @@ export const actions = {
 				}
 			})
 		} catch (e) {
-			if (e instanceof Prisma.PrismaClientKnownRequestError) {
-				if (e.code === 'P2002')
-					return fail(409, {
-						issues: [{ 'message': 'Email already exists' }] as ZodIssue[]
-					})
-			}
-
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
 		}
 
 		if (user === null) {
-			return fail(409, {
+			return fail(404, {
 				issues: [{ 'message': 'User does not exists' }] as ZodIssue[]
 			})
 		}
