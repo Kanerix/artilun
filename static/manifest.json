@@ -5,7 +5,7 @@
 	"id": "/",
 	"start_url": "/",
 	"background_color": "#ffffff",
-	"display": "standalone",
+	"display": "fullscreen",
 	"scope": "/",
 	"theme_color": "#3367D6",
 	"shortcuts": [

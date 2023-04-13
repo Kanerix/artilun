@@ -99,7 +99,7 @@
 	}
 </script>
 
-<Paper class="lg:col-span-8 col-span-12">
+<Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader
 		header="Invite a user to your orginization"
 	/>
@@ -122,7 +122,7 @@
 		{/if}
 	</PaperBody>
 </Paper>
-<Paper class="lg:col-span-4 col-span-12">
+<Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader header="Invited users" />
 	{#if page}
 		<table class="pt-4 pb-6 px-6 w-full">
