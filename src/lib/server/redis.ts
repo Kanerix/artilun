@@ -1,10 +1,6 @@
 import { REDIS_URL } from '$env/static/private'
-import { createClient } from 'redis'
+import Redis from 'ioredis'
 
-const redis = createClient({
-	url: REDIS_URL
-})
-
-await redis.connect()
+const redis = new Redis(REDIS_URL)
 
 export default redis
