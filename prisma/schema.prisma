@@ -95,6 +95,7 @@ model Lesson {
   subject         Subject       @relation(fields: [subjectId], references: [id])
   standTemplateId Int
   standTemplate   StandTemplate @relation(fields: [standTemplateId], references: [id])
+  anwsers		  QuestionAnwser[]
 }
 
 model StandTemplate {
@@ -131,4 +132,6 @@ model QuestionAnwser {
   updatedAt  DateTime      @default(now()) @updatedAt
   questionId Int
   question   StandQuestion @relation(fields: [questionId], references: [id])
+  lessonId   Int
+  lesson     Lesson        @relation(fields: [lessonId], references: [id])
 }

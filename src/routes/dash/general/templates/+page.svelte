@@ -13,6 +13,7 @@
 	export let data: PageData
 
 </script>
+
 <Paper class="col-span-12">
 	<PaperHeader
 		header="Templates"

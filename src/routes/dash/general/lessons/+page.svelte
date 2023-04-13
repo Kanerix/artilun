@@ -1,14 +1,68 @@
 <script lang="ts">
+    import { page } from '$app/stores';
+    import Button from '../../../../components/Button.svelte';
+    import Input from '../../../../components/Input.svelte';
     import Paper from '../../../../components/Paper.svelte';
     import PaperBody from '../../../../components/PaperBody.svelte';
     import PaperHeader from '../../../../components/PaperHeader.svelte';
+    import TableData from '../../../../components/TableData.svelte';
+    import TableHead from '../../../../components/TableHead.svelte';
+    import TableRow from '../../../../components/TableRow.svelte';
+    import type { PageData } from './$types';
+
+	export let data: PageData
+
 </script>
 
 <Paper class="col-span-12">
 	<PaperHeader
-		header="Lessons"
+		header="Templates"
 	/>
+	{#if page}
+		<table class="pt-4 pb-6 px-6 w-full table-auto">
+			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
+				<TableRow>
+					{#each ['Template name', 'subject', 'Action'] as header}
+						<TableHead>
+							{header}
+						</TableHead>
+					{/each}
+				</TableRow>
+			</thead>
+			<tbody>
+				{#if data.lessons.length === 0}
+					<TableRow border={false}>
+						<TableData colspan=2 class="text-center">
+							No templates 
+						</TableData>
+					</TableRow>
+				{/if}
+				{#each Object.entries(data.lessons) as [i, lesson]}
+					<TableRow border={data.lessons.length-1 !== parseInt(i)}>
+						<TableData>
+							{lesson.name}
+						</TableData>
+						<TableData>
+							{lesson.subject}
+						</TableData>
+						<TableData>
+							<Button label="View" link href="/dash/general/lessons/{lesson.id}/data" />
+							<Button label="Delete" />
+						</TableData>
+					</TableRow>
+				{/each}
+			</tbody>
+		</table>
+	{/if}
 	<PaperBody>
-		Test lessons
+		<form class="flex">
+			<Input
+				class="grow mr-6"
+				placeholder="Template name"
+				label="Template"
+				name="template"
+			/>
+			<Button label="Add" type="submit" />
+		</form>
 	</PaperBody>
 </Paper>
