@@ -172,15 +172,15 @@ async function main() {
 		data: [
 			{
 				standTemplateId: templates[0].id,
-				question: 'Did you like todays lesson?',
+				question: 'How much did you like todays lesson?',
 			},
 			{
 				standTemplateId: templates[0].id,
-				question: 'Did you learn something from the video we watched today?',
+				question: 'How much did you like the videos we watched today?',
 			},
 			{
 				standTemplateId: templates[0].id,
-				question: 'Did you find the tool we used today useful?',
+				question: 'How much did you like the tools we used today?',
 			}
 		],
 		skipDuplicates: true	

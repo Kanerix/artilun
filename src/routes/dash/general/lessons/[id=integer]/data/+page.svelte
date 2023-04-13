@@ -22,9 +22,9 @@
 				<div class="flex flex-col">
 					<Bar
 						data={{
-							labels: ['1 star', '2 star', '3 star', '4 star', '5 star'],
+							labels: ['Very bad', 'Bad', 'Medioka', 'Good', 'Very good'],
 							datasets: [{
-								label: "Rating",
+								label: "Anwsers",
 								data: question.ratings,
 								backgroundColor: [
 									'rgba(255, 99, 132, 0.2)',
