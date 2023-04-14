@@ -16,13 +16,13 @@
 
 <Paper class="col-span-12">
 	<PaperHeader
-		header="Templates"
+		header="Lessons"
 	/>
 	{#if page}
 		<table class="pt-4 pb-6 px-6 w-full table-auto">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
-					{#each ['Template name', 'subject', 'Action'] as header}
+					{#each ['Lesson name', 'subject', 'Action'] as header}
 						<TableHead>
 							{header}
 						</TableHead>
@@ -58,9 +58,9 @@
 		<form class="flex">
 			<Input
 				class="grow mr-6"
-				placeholder="Template name"
-				label="Template"
-				name="template"
+				placeholder="Lesson name"
+				label="Lesson"
+				name="lesson"
 			/>
 			<Button label="Add" type="submit" />
 		</form>
