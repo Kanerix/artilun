@@ -16,6 +16,7 @@ COPY . .
 COPY --from=modules /modules/node_modules ./node_modules
 
 RUN npx pnpm install 
+RUN npx pnpm build
 
 
 # Create production image
@@ -34,4 +35,4 @@ USER www
 
 EXPOSE 3000
 
-CMD ["node", "build"]
+CMD ["node", "-r", "dotenv/config", "build"]
