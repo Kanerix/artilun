@@ -55,7 +55,7 @@
 				{category}
 			</h6>
 			{#each pages as link}
-				{@const isActive = $page.url.pathname === link.href}
+				{@const isActive = $page.url.pathname.startsWith(link.href)}
 				<a
 					href={link.href}
 					class="flex items-center w-full mb-4" 
