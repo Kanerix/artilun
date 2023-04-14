@@ -127,13 +127,13 @@
 	{#if page}
 		<table class="pt-4 pb-6 px-6 w-full">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
-				<tr>
+				<TableRow>
 					{#each ['Email', 'Action'] as header}
 						<TableHead>
 							{header}
 						</TableHead>
 					{/each}
-				</tr>
+					</TableRow>
 			</thead>
 			<tbody>
 				{#if data.invites.length === 0}
