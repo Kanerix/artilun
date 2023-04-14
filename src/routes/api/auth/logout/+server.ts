@@ -14,8 +14,8 @@ export const POST: RequestHandler = async (event) => {
 			where: { token: refreshToken }
 		})
 	} finally {
-		event.cookies.delete('access_token', { path: '/' })
-		event.cookies.delete('refresh_token', { path: '/' })
+		event.cookies.delete('access_token', { path: '/', secure: false })
+		event.cookies.delete('refresh_token', { path: '/', secure: false })
 	}
 
 	throw redirect(302, '/login')
