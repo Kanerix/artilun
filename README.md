@@ -7,7 +7,7 @@ This is a app used to evaluate school lessons. It is created as a school project
 
 - Install node if not installed.
 
-- Create a `.env.development` or/and `.env.proudction` file, following the `.env.example`.
+- Create a `.env` file, following the `.env.example`.
 
 - Install `pnpm` if not installed.
 
