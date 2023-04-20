@@ -68,13 +68,12 @@ export const actions = {
 			})
 		}
 
-		event.cookies.set('access_token', accessToken, { path: '/', httpOnly: false, secure: false })
+		event.cookies.set('access_token', accessToken, { path: '/', httpOnly: false })
 		event.cookies.set(
 			'refresh_token',
 			refreshToken,
 			{
 				httpOnly: true,
-				secure: false,
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
 			}
 		)
