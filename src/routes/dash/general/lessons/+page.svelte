@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import Button from '../../../../components/Button.svelte';
-    import Input from '../../../../components/Input.svelte';
-    import Paper from '../../../../components/Paper.svelte';
-    import PaperBody from '../../../../components/PaperBody.svelte';
-    import PaperHeader from '../../../../components/PaperHeader.svelte';
-    import TableData from '../../../../components/TableData.svelte';
-    import TableHead from '../../../../components/TableHead.svelte';
-    import TableRow from '../../../../components/TableRow.svelte';
-    import type { PageData } from './$types';
+    import { page } from '$app/stores'
+    import Button from '../../../../components/Button.svelte'
+    import Input from '../../../../components/Input.svelte'
+    import Paper from '../../../../components/Paper.svelte'
+    import PaperBody from '../../../../components/PaperBody.svelte'
+    import PaperHeader from '../../../../components/PaperHeader.svelte'
+    import TableData from '../../../../components/TableData.svelte'
+    import TableHead from '../../../../components/TableHead.svelte'
+    import TableRow from '../../../../components/TableRow.svelte'
+    import type { PageData } from './$types'
 
 	export let data: PageData
 
@@ -38,7 +38,7 @@
 			<tbody>
 				{#if data.lessons.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No templates 
 						</TableData>
 					</TableRow>
@@ -56,11 +56,11 @@
 								label="View"
 								link
 								href="/dash/general/lessons/{lesson.id}/data"
-								class="rounded-tr-none"
+								class="rounded-r-none mr-0"
 							/>
 							<Button
 								label="Delete"
-								class="rounded-tl-none"
+								class="rounded-l-none ml-0"
 							/>
 						</TableData>
 					</TableRow>

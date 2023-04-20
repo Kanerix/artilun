@@ -1,5 +1,5 @@
 <script lang="ts">
-    import StatCard from '../../../../components/StatCard.svelte';
+    import StatCard from '../../../../components/StatCard.svelte'
 </script>
 
 <StatCard

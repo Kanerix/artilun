@@ -114,7 +114,7 @@
 			<tbody>
 				{#if data.subjects.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No subjects 
 						</TableData>
 					</TableRow>

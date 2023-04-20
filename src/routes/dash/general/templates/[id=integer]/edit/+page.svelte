@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import Button from '../../../../../../components/Button.svelte';
-    import Paper from '../../../../../../components/Paper.svelte';
-    import PaperBody from '../../../../../../components/PaperBody.svelte';
-    import PaperHeader from '../../../../../../components/PaperHeader.svelte';
-    import type { PageData } from './$types';
+    import { page } from '$app/stores'
+    import Button from '../../../../../../components/Button.svelte'
+    import Paper from '../../../../../../components/Paper.svelte'
+    import PaperBody from '../../../../../../components/PaperBody.svelte'
+    import PaperHeader from '../../../../../../components/PaperHeader.svelte'
+    import type { PageData } from './$types'
 
 	export let data: PageData
 

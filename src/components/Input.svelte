@@ -3,7 +3,7 @@
 	export let label: string | undefined = undefined
 </script>
 
-<div class={$$props.class}>
+<div class={$$props.class || ''}>
 	{#if label}
 		<label
 			for={$$props.for}

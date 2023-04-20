@@ -1,8 +1,8 @@
 <script>
 
-    import Paper from '../components/Paper.svelte';
-    import PaperBody from '../components/PaperBody.svelte';
-    import PaperHeader from '../components/PaperHeader.svelte';
+    import Paper from '../components/Paper.svelte'
+    import PaperBody from '../components/PaperBody.svelte'
+    import PaperHeader from '../components/PaperHeader.svelte'
 
 </script>
 
