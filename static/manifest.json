@@ -29,6 +29,12 @@
 			"src": "/logo.png",
 			"type": "image/png",
 			"sizes": "512x512"
+		},
+		{
+			"name": "itu.jpg",
+			"src": "/itu.jpg",
+			"type": "image/jpg",
+			"sizes": "2922x2962"
 		}
 	],
 	"screenshots": []
