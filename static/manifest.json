@@ -7,13 +7,13 @@
 	"background_color": "#ffffff",
 	"display": "fullscreen",
 	"scope": "/",
-	"theme_color": "#3367D6",
+	"theme_color": "#fcfcfc",
 	"shortcuts": [
 		{
 			"name": "Home page",
 			"short_name": "Home",
-			"description": "Go to the dashboard home page",
-			"url": "/",
+			"description": "The dashboard home page",
+			"url": "/general/home",
 			"icons": []
 		}
 	],
