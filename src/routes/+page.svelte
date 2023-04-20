@@ -27,7 +27,7 @@
 			/>
 			<PaperBody>
 				<a href="/register" class="text-md text-slate-600 underline mb-4">
-					Already have an account?
+					Don't have an accout?
 				</a>
 			</PaperBody>
 		</Paper>
