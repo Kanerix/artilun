@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import { z, type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
 import { generateToken } from '$lib/server/auth'
-import type { Actions } from '../login/$types'
 import type { User } from '@prisma/client'
 
 const userLoginSchema = z.object({
@@ -33,6 +32,8 @@ export const actions = {
 				}
 			})
 		} catch (e) {
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
@@ -63,6 +64,8 @@ export const actions = {
 				}
 			})
 		} catch (e) {
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
@@ -80,4 +83,4 @@ export const actions = {
 
 		throw redirect(302, '/dash/general/home')
 	}
-} satisfies Actions
+}
