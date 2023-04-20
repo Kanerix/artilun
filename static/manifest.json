@@ -10,10 +10,10 @@
 	"theme_color": "#fcfcfc",
 	"shortcuts": [
 		{
-			"name": "Home page",
-			"short_name": "Home",
-			"description": "The dashboard home page",
-			"url": "/general/home",
+			"name": "Landing page",
+			"short_name": "Landing",
+			"description": "The landing page",
+			"url": "/",
 			"icons": []
 		}
 	],
