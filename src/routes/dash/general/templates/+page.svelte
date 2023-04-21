@@ -35,7 +35,7 @@
 
 				await invalidate('template:create')
 
-				if (response.ok) {
+				if (result.type === 'success') {
 					fufill(result)
 				} else {
 					reject(result)
@@ -54,7 +54,7 @@
 	function deleteTemplate(id: number) {
 		toast.promise(
 			new Promise(async (fufill, reject) => {
-				const request = fetch('/api/general/templates/remove', {
+				const request = fetch('/api/general/templates/delete', {
 					method: 'POST',
 					body: JSON.stringify({ id, name })
 				})

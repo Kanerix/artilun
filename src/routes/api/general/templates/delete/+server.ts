@@ -19,13 +19,8 @@ export const POST: RequestHandler = async (event) => {
 
 	try {
 		const standTemplate = await prisma.standTemplate.findUnique({
-			where: {
-				id: result.data.id,
-			},
-			select: {
-				id: true,
-				userId: true,
-			}
+			where: { id: result.data.id },
+			select: { id: true, userId: true }
 		})
 
 		if (!standTemplate) {

@@ -111,7 +111,7 @@ export const actions = {
 		} catch (e) {
 			if (e instanceof Prisma.PrismaClientKnownRequestError) {
 				if (e.code === 'P2002') {
-					return fail(404, {
+					return fail(403 , {
 						issues: [{ 'message': 'Template name already exsist' }] as ZodIssue[]
 					})
 				}

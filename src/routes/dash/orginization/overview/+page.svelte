@@ -35,7 +35,7 @@
 
 				await invalidate('subject:add')
 
-				if (response.ok) {
+				if (result.type === 'success') {
 					fufill(result)
 				} else {
 					reject(result)
