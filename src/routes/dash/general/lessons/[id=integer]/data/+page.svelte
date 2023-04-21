@@ -7,10 +7,19 @@
     import PaperBody from '../../../../../../components/PaperBody.svelte'
     import PaperHeader from '../../../../../../components/PaperHeader.svelte'
     import type { PageData } from './$types'
+    import Button from '../../../../../../components/Button.svelte';
 
 	export let data: PageData
 
 </script>
+
+<div class="col-span-12">
+	<Button
+		link
+		href="/dash/general/lessons" 
+		label="Back"
+	/>
+</div>
 
 {#if page}
 	{#each Object.values(data.lesson.questions) as question}

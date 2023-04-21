@@ -1,20 +1,22 @@
 <script lang="ts">
     import { page } from '$app/stores'
+    import type { PageData } from './$types'
     import Button from '../../../../../../components/Button.svelte'
     import Paper from '../../../../../../components/Paper.svelte'
     import PaperBody from '../../../../../../components/PaperBody.svelte'
     import PaperHeader from '../../../../../../components/PaperHeader.svelte'
-    import type { PageData } from './$types'
 
 	export let data: PageData
 
 </script>
 
-<Button
-	link
-	href="/dash/general/templates" 
-	label="Back"
-/>
+<div class="col-span-12">
+	<Button
+		link
+		href="/dash/general/templates" 
+		label="Back"
+	/>
+</div>
 
 <Paper class="col-span-12">
 	<PaperHeader 

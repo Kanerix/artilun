@@ -82,7 +82,7 @@
 
 				await invalidate('invite:send')
 
-				if (result.type === 'success') {
+				if (response.ok) {
 					fufill(result)
 				} else {
 					reject(result)

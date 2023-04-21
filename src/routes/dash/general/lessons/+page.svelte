@@ -14,12 +14,6 @@
 
 </script>
 
-<Button
-	link
-	href="/dash/general/lessons" 
-	label="Back"
-/>
-
 <Paper class="col-span-12">
 	<PaperHeader
 		header="Lessons"
@@ -52,16 +46,13 @@
 							{lesson.subject}
 						</TableData>
 						<TableData>
-							<Button
-								label="View"
-								link
-								href="/dash/general/lessons/{lesson.id}/data"
-								class="rounded-r-none mr-0"
-							/>
-							<Button
-								label="Delete"
-								class="rounded-l-none ml-0"
-							/>
+							<div>
+								<Button
+									label="View" link
+									href="/dash/general/lessons/{lesson.id}/data"
+								/>
+								<Button label="Delete" />
+							</div>
 						</TableData>
 					</TableRow>
 				{/each}
