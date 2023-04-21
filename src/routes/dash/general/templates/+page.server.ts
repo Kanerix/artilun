@@ -2,14 +2,21 @@ import { fail, redirect } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 import prisma from '$lib/server/prisma'
 import { z, type ZodIssue } from 'zod'
+import { Prisma } from '@prisma/client'
+
+interface Subject {
+	name: string
+}
 
 interface Template {
 	id: number
 	name: string
+	subject: Subject
 }
 
 interface LoadData {
 	templates: Template[]
+	subjects: Subject[]
 }
 
 export const load: PageServerLoad = (async (event): Promise<LoadData> => {
@@ -21,16 +28,39 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 	const templates = await prisma.standTemplate.findMany({
 		where: {
 			userId: user.id
+		},
+		select: {
+			id: true,
+			name: true,
+			subject: {
+				select: {
+					name: true
+				}
+			}
+		}
+	})
+	
+	const subjects = await prisma.subject.findMany({
+		where: {
+			orginizationId: user.orginization.id
+		},
+		select: {
+			name: true,
 		}
 	})
 
+	event.depends('template:create')
+	event.depends('template:remove')
+
 	return {
-		templates
+		templates,
+		subjects
 	}
 })
 
 const orginizationTemplateSchema = z.object({
-	name: z.string().min(1).max(50)
+	templateName: z.string().min(1).max(50),
+	subjectName: z.string().min(1).max(50)
 })
 
 export const actions = {
@@ -49,6 +79,48 @@ export const actions = {
 		if (!user.orginization) {
 			return fail(404, {
 				issues: [{ 'message': 'Orginization not found' }] as ZodIssue[]
+			})
+		}
+
+		const subject = await prisma.subject.findUnique({
+			where: {
+				orginizationIdentifier: {
+					name: result.data.subjectName,
+					orginizationId: user.orginization.id
+				}
+			},
+			select: {
+				id: true
+			}
+		})
+
+		if (!subject) {
+			return fail(404, {
+				issues: [{ 'message': 'Subject not found' }] as ZodIssue[]
+			})
+		}
+
+		try {
+			await prisma.standTemplate.create({
+				data: {
+					name: result.data.templateName,
+					userId: user.id,
+					subjectId: subject.id 
+				}
+			})
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				if (e.code === 'P2002') {
+					return fail(403 , {
+						issues: [{ 'message': 'Template name already exsist' }] as ZodIssue[]
+					})
+				}
+			}
+
+			console.error(e)
+
+			return fail(500, {
+				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
 		}
 

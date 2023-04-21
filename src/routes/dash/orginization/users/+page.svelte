@@ -138,7 +138,7 @@
 			<tbody>
 				{#if data.invites.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No active invites
 						</TableData>
 					</TableRow>
@@ -177,7 +177,7 @@
 			<tbody>
 				{#if data.userTableData.length === 0}
 				<TableRow border={false}>
-					<TableData colspan=5 class="text-center">
+					<TableData colspan="5" class="text-center">
 						No users
 					</TableData>
 				</TableRow>

@@ -7,12 +7,12 @@
 	"background_color": "#ffffff",
 	"display": "fullscreen",
 	"scope": "/",
-	"theme_color": "#3367D6",
+	"theme_color": "#fcfcfc",
 	"shortcuts": [
 		{
-			"name": "Home page",
-			"short_name": "Home",
-			"description": "Go to the dashboard home page",
+			"name": "Landing page",
+			"short_name": "Landing",
+			"description": "The landing page",
 			"url": "/",
 			"icons": []
 		}
@@ -29,6 +29,12 @@
 			"src": "/logo.png",
 			"type": "image/png",
 			"sizes": "512x512"
+		},
+		{
+			"name": "itu.jpg",
+			"src": "/itu.jpg",
+			"type": "image/jpg",
+			"sizes": "2922x2962"
 		}
 	],
 	"screenshots": []

@@ -15,6 +15,6 @@
 	}
 </script>
 
-<div {...$$props} class="{colorToCSS(color)} shadow-xl rounded overflow-hidden {$$props.class}">
+<div {...$$props} class="{colorToCSS(color)} shadow-xl rounded overflow-hidden {$$props.class || ''}">
 	<slot/>
 </div>

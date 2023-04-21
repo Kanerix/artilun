@@ -11,7 +11,7 @@
     import TableHead from '../../../components/TableHead.svelte'
     import PaperBody from '../../../components/PaperBody.svelte'
     import { invalidate } from '$app/navigation'
-    import TableRow from '../../../components/TableRow.svelte';
+    import TableRow from '../../../components/TableRow.svelte'
 
 	export let form: ActionData
 	export let data: PageData
@@ -88,7 +88,7 @@
 			</thead>
 			<tbody>
 				{#if data.invites.length === 0}
-					<TableData colspan=2 class="text-center">
+					<TableData colspan="2" class="text-center">
 						No invites
 					</TableData>
 				{/if}

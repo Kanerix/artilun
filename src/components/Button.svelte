@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let label: string
 	export let color: Color = 'default'
-	export let link: boolean = false 
+	export let link = false 
 	export let href = ''
 
 	type Color = 'default' | 'error'
@@ -22,7 +22,7 @@
 		{href}	
 		on:click
 		class="{colorToCSS(color)} text-white text-xs text-center font-bold uppercase p-3 rounded focus:ring-2 shadow-md
-		transition ease-in-out duration-200 hover: {$$props.class}"
+		transition ease-in-out duration-200 hover: {$$props.class || ''}"
 	>
 		{label}
 	</a>
@@ -31,7 +31,7 @@
 		{...$$props}
 		on:click
 		class="{colorToCSS(color)} text-white text-xs font-bold uppercase p-3 rounded focus:ring-2 shadow-md
-		transition ease-in-out duration-200 hover: {$$props.class}"
+		transition ease-in-out duration-200 hover: {$$props.class || ''}"
 	>
 		{label}
 	</button>

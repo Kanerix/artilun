@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import Button from '../../../../components/Button.svelte';
-    import Input from '../../../../components/Input.svelte';
-    import Paper from '../../../../components/Paper.svelte';
-    import PaperBody from '../../../../components/PaperBody.svelte';
-    import PaperHeader from '../../../../components/PaperHeader.svelte';
-    import TableData from '../../../../components/TableData.svelte';
-    import TableHead from '../../../../components/TableHead.svelte';
-    import TableRow from '../../../../components/TableRow.svelte';
-    import type { PageData } from './$types';
+    import { page } from '$app/stores'
+    import Button from '../../../../components/Button.svelte'
+    import Input from '../../../../components/Input.svelte'
+    import Paper from '../../../../components/Paper.svelte'
+    import PaperBody from '../../../../components/PaperBody.svelte'
+    import PaperHeader from '../../../../components/PaperHeader.svelte'
+    import TableData from '../../../../components/TableData.svelte'
+    import TableHead from '../../../../components/TableHead.svelte'
+    import TableRow from '../../../../components/TableRow.svelte'
+    import type { PageData } from './$types'
 
 	export let data: PageData
 
@@ -32,7 +32,7 @@
 			<tbody>
 				{#if data.lessons.length === 0}
 					<TableRow border={false}>
-						<TableData colspan=2 class="text-center">
+						<TableData colspan="2" class="text-center">
 							No templates 
 						</TableData>
 					</TableRow>
@@ -46,8 +46,13 @@
 							{lesson.subject}
 						</TableData>
 						<TableData>
-							<Button label="View" link href="/dash/general/lessons/{lesson.id}/data" />
-							<Button label="Delete" />
+							<div>
+								<Button
+									label="View" link
+									href="/dash/general/lessons/{lesson.id}/data"
+								/>
+								<Button label="Delete" />
+							</div>
 						</TableData>
 					</TableRow>
 				{/each}

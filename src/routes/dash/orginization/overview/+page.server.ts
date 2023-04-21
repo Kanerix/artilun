@@ -86,6 +86,8 @@ export const actions = {
 				}
 			}
 
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ message: 'Internal server error' }] as ZodIssue[]
 			})

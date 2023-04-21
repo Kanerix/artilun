@@ -98,7 +98,7 @@ export async function autenticate(event: RequestEvent): Promise<void> {
 				redis.del(`blocked:${token.user.id.toString()}`)
 			}
 
-			event.cookies.set('access_token', newAccessToken, { path: '/', secure: false })
+			event.cookies.set('access_token', newAccessToken, { path: '/' })
 			event.locals.user = decodeToken(newAccessToken)
 		}
 	}

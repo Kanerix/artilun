@@ -66,6 +66,8 @@ export const actions = {
 				})
 			}
 		} catch (e) {
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
@@ -88,6 +90,8 @@ export const actions = {
 				},
 			})
 		} catch (e) {
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})

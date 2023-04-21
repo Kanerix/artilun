@@ -3,7 +3,6 @@ import { Prisma, type User } from '@prisma/client'
 import { z, type ZodIssue } from 'zod'
 import bcrypt from 'bcrypt'
 import prisma from '$lib/server/prisma'
-import type { Actions } from '../register/$types'
 import { SALT_ROUNDS } from '$env/static/private'
 
 const userRegisterSchema = z.object({
@@ -44,6 +43,8 @@ export const actions = {
 				}
 			}
 
+			console.error(e)
+
 			return fail(500, {
 				issues: [{ 'message': 'Internal server error' }] as ZodIssue[]
 			})
@@ -51,4 +52,4 @@ export const actions = {
 
 		throw redirect(308, '/login')
 	}
-} satisfies Actions
+}
