@@ -28,8 +28,9 @@ self.addEventListener('activate', (event) => {
 })
  
 self.addEventListener('fetch', (event) => {
+	if (event.request.method !== 'GET' || event.request.url.startsWith('http')) return
+
 	async function respond() {
-		if (event.request.method !== 'GET' || event.request.url.startsWith('http')) return
 		const url = new URL(event.request.url)
 		const cache = await caches.open(CACHE)
  
