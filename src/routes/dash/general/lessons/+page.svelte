@@ -99,7 +99,7 @@
 			<tbody>
 				{#if data.lessons.length === 0}
 					<TableRow border={false}>
-						<TableData colspan="4" class="text-center">
+						<TableData colspan=4 class="text-center">
 							No templates 
 						</TableData>
 					</TableRow>

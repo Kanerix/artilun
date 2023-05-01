@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { PageServerLoad } from './$types'
 
-interface Questions {
+interface Question {
 	question: string
 	ratings: number[]
 }
@@ -10,7 +10,7 @@ interface Questions {
 interface Lesson {
 	id: number
 	name: string
-	questions: Record<number, Questions>
+	questions: Record<number, Question> 
 }
 
 interface LoadData {
@@ -63,7 +63,7 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		throw redirect(302, '/dash/general/templates')
 	}
 
-	const questions: Record<number, Questions> = {}
+	const questions: Record<number, Question> = {}
 
 	for (const anwser of lesson.anwsers) {
 		if (!questions[anwser.question.id]) {
@@ -74,8 +74,6 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		}
 		questions[anwser.question.id].ratings.push(anwser.rating)
 	}
-
-	event.depends('question:delete')
 
 	return {
 		lesson: {

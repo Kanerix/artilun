@@ -2,6 +2,7 @@
     import toast from 'svelte-french-toast'
     import type { ActionData, PageData } from './$types'
     import { page } from '$app/stores'
+    import { invalidate } from '$app/navigation'
     import Button from '../../../components/Button.svelte'
     import FormError from '../../../components/FormError.svelte'
     import Input from '../../../components/Input.svelte'
@@ -10,7 +11,6 @@
     import TableData from '../../../components/TableData.svelte'
     import TableHead from '../../../components/TableHead.svelte'
     import PaperBody from '../../../components/PaperBody.svelte'
-    import { invalidate } from '$app/navigation'
     import TableRow from '../../../components/TableRow.svelte'
     import Table from '../../../components/Table.svelte';
 
@@ -89,7 +89,7 @@
 			</thead>
 			<tbody>
 				{#if data.invites.length === 0}
-					<TableData colspan="2" class="text-center">
+					<TableData colspan=2 class="text-center">
 						No invites
 					</TableData>
 				{/if}

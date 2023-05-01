@@ -97,7 +97,7 @@
 			<tbody>
 				{#if data.templates.length === 0}
 					<TableRow border={false}>
-						<TableData colspan="2" class="text-center">
+						<TableData colspan=3 class="text-center">
 							No templates 
 						</TableData>
 					</TableRow>
