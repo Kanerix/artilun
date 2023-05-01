@@ -46,6 +46,9 @@ export const POST: RequestHandler = async (event) => {
 		await prisma.lesson.delete({
 			where: {
 				id: result.data.id,
+			},
+			include: {
+				anwsers: true,
 			}
 		})
 
@@ -54,6 +57,8 @@ export const POST: RequestHandler = async (event) => {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code == 'P2025') {
 				throw error(404, 'Lesson not found')
+			} else if (e.code == 'P2003') {
+				throw error(403, 'Lesson used in relation')
 			}
 		}
 

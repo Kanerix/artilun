@@ -3,14 +3,14 @@ import prisma from '$lib/server/prisma'
 import type { PageServerLoad } from './$types'
 
 interface Questions {
+	id: number
 	question: string
-	ratings: number[]
 }
 
 interface Lesson {
 	id: number
 	name: string
-	questions: Record<number, Questions>
+	questions: Questions[]
 }
 
 interface LoadData {
@@ -36,13 +36,12 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 					id: true
 				}
 			},
-			anwsers: {
+			standTemplate: {
 				select: {
-					rating: true,
-					question: {
+					questions: {
 						select: {
-							question: true,
-							id: true
+							id: true, 
+							question: true
 						}
 					}
 				}
@@ -58,23 +57,11 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		throw redirect(302, '/dash/general/templates')
 	}
 
-	const questions: Record<number, Questions> = {}
-
-	for (const anwser of lesson.anwsers) {
-		if (!questions[anwser.question.id]) {
-			questions[anwser.question.id] = {
-				question: anwser.question.question,
-				ratings: []
-			}
-		}
-		questions[anwser.question.id].ratings.push(anwser.rating)
-	}
-
 	return {
 		lesson: {
 			id: lesson.id,
 			name: lesson.name,
-			questions: questions
+			questions: lesson.standTemplate.questions
 		}
 	}
 })

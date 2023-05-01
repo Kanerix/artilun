@@ -99,7 +99,7 @@
 			<tbody>
 				{#if data.lessons.length === 0}
 					<TableRow border={false}>
-						<TableData colspan="3" class="text-center">
+						<TableData colspan="4" class="text-center">
 							No templates 
 						</TableData>
 					</TableRow>
@@ -122,7 +122,7 @@
 							<Button
 								label="Data" link href="/dash/general/lessons/{lesson.id}/data"
 							/>
-							<Button label="Delete" on:click={() => deleteLesson(lesson.id)} />
+							<Button label="Delete" color="error" on:click={() => deleteLesson(lesson.id)} />
 						</TableData>
 					</TableRow>
 				{/each}

@@ -54,6 +54,8 @@ export const POST: RequestHandler = async (event) => {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code == 'P2025') {
 				throw error(404, 'Stand question not found')
+			} else if (e.code == 'P2003') {
+				throw error(403, 'Stand question used in lesson')
 			}
 		}
 

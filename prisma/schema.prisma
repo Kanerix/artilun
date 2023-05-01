@@ -135,5 +135,5 @@ model QuestionAnwser {
   questionId Int
   question   StandQuestion @relation(fields: [questionId], references: [id])
   lessonId   Int
-  lesson     Lesson        @relation(fields: [lessonId], references: [id])
+  lesson     Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 }

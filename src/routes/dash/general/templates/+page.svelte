@@ -112,7 +112,7 @@
 						</TableData>
 						<TableData>
 							<Button label="Edit" link href="/dash/general/templates/{template.id}/edit" />
-							<Button label="Delete" on:click={() => deleteTemplate(template.id)} />
+							<Button label="Delete" color="error" on:click={() => deleteTemplate(template.id)} />
 						</TableData>
 					</TableRow>
 				{/each}
