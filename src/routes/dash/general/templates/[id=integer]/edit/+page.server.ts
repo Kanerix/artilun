@@ -56,6 +56,7 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 	}
 
 	event.depends('question:create')
+	event.depends('question:delete')
 
 	return {
 		template

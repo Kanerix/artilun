@@ -96,6 +96,8 @@ model Lesson {
   standTemplateId Int
   standTemplate   StandTemplate @relation(fields: [standTemplateId], references: [id])
   anwsers		  QuestionAnwser[]
+
+  @@unique([userId, name], name: "lessonIdentifier")
 }
 
 model StandTemplate {

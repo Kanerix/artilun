@@ -58,7 +58,7 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 	}
 })
 
-const orginizationTemplateSchema = z.object({
+const templateSchema = z.object({
 	templateName: z.string().min(1).max(50),
 	subjectName: z.string().min(1).max(50)
 })
@@ -68,7 +68,7 @@ export const actions = {
 		const data = await event.request.formData()
 		const parseable = Object.fromEntries(data.entries())
 
-		const result = orginizationTemplateSchema.safeParse(parseable)
+		const result = templateSchema.safeParse(parseable)
 		if (!result.success) {
 			return fail(422, {
 				issues: result.error.issues

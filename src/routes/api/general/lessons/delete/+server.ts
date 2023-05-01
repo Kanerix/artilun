@@ -4,13 +4,13 @@ import { error } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { RequestHandler } from './$types'
 
-const deleteStandQuestionSchema = z.object({
+const deleteLessonSchema = z.object({
 	id: z.number().positive(),
 })
 
 export const POST: RequestHandler = async (event) => {
 	const data = await event.request.json()
-	const result = deleteStandQuestionSchema.safeParse(data)
+	const result = deleteLessonSchema.safeParse(data)
 	if (!result.success) {
 		throw error(422, 'Invalid data')
 	}
@@ -18,7 +18,7 @@ export const POST: RequestHandler = async (event) => {
 	const user = event.locals.user
 
 	try {
-		const standQuestion = await prisma.standQuestion.findFirst({
+		const lesson = await prisma.lesson.findFirst({
 			where: {
 				id: result.data.id,
 			},
@@ -35,15 +35,15 @@ export const POST: RequestHandler = async (event) => {
 			}
 		})
 
-		if (!standQuestion) {
-			throw error(404, 'Stand question not found')
+		if (!lesson) {
+			throw error(404, 'Lesson not found')
 		}
 
-		if (user.id !== standQuestion.standTemplate.user.id) {
+		if (user.id !== lesson.standTemplate.user.id) {
 			throw error(403, 'Forbidden')
 		}
 
-		await prisma.standQuestion.delete({
+		await prisma.lesson.delete({
 			where: {
 				id: result.data.id,
 			}
@@ -53,7 +53,7 @@ export const POST: RequestHandler = async (event) => {
 	} catch (e) {
 		if (e instanceof Prisma.PrismaClientKnownRequestError) {
 			if (e.code == 'P2025') {
-				throw error(404, 'Stand question not found')
+				throw error(404, 'Lesson not found')
 			}
 		}
 

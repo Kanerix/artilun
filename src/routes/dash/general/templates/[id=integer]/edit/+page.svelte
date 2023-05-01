@@ -15,6 +15,7 @@
     import { invalidate } from '$app/navigation';
     import Fa from 'svelte-fa';
     import { faClose } from '@fortawesome/free-solid-svg-icons';
+    import Table from '../../../../../../components/Table.svelte';
 
 	export let form: ActionData
 	export let data: PageData
@@ -58,7 +59,7 @@
 					body: JSON.stringify({ id })
 				})
 
-				await invalidate('subject:remove')
+				await invalidate('question:delete')
 
 				if (response.ok) {
 					fufill(response)
@@ -88,7 +89,7 @@
 		header="Questions for the current template"
 	/>
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table>
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['Question'] as header}
@@ -122,7 +123,7 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 	<PaperBody>
 		<form

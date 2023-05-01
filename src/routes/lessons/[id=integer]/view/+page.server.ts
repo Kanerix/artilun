@@ -36,11 +36,6 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 					id: true
 				}
 			},
-			subject: {
-				select: {
-					name: true
-				}
-			},
 			anwsers: {
 				select: {
 					rating: true,
@@ -74,8 +69,6 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		}
 		questions[anwser.question.id].ratings.push(anwser.rating)
 	}
-
-	event.depends('question:delete')
 
 	return {
 		lesson: {

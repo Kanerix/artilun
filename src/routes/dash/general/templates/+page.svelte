@@ -14,11 +14,12 @@
     import TableHead from '../../../../components/TableHead.svelte'
     import TableRow from '../../../../components/TableRow.svelte'
     import FormError from '../../../../components/FormError.svelte';
+    import Table from '../../../../components/Table.svelte';
 
 	export let form: ActionData
 	export let data: PageData
 
-	let selectedSubject: { name: string } = data.subjects[0]
+	let selectedSubject: string = data.subjects[0].name
 
 	function createTemplate(event: Event) {
 		toast.promise(
@@ -56,7 +57,7 @@
 			new Promise(async (fufill, reject) => {
 				const request = fetch('/api/general/templates/delete', {
 					method: 'POST',
-					body: JSON.stringify({ id, name })
+					body: JSON.stringify({ id })
 				})
 
 				const response = await request
@@ -83,7 +84,7 @@
 		header="Templates"
 	/>
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table>
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['Template name', 'Subject', 'Action'] as header}
@@ -116,7 +117,7 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 	<PaperBody>
 		<form
@@ -133,7 +134,7 @@
 			<input
 				class="hidden"	
 				name="subjectName"
-				bind:value={selectedSubject.name}
+				bind:value={selectedSubject}
 			>
 			<div class="col-span-4">
 				<h6 class="block w-full text-xs text-slate-600 font-bold uppercase mb-1">
@@ -142,28 +143,26 @@
 				<Listbox
 					value={selectedSubject}
 					on:change={(event) => {
-						selectedSubject.name = event.detail
+						selectedSubject = event.detail
 					}}
 				>
 					<ListboxButton
 						class="relative bg-white text-xs text-left text-slate-600 rounded p-3 w-full 
 						shadow-md focus:ring-2 cursor-pointer"
 					>
-						{selectedSubject.name}
+						{selectedSubject}
 					</ListboxButton>
 					<ListboxOptions
 						class="absolute bg-white text-xs text-slate-800 rounded min-w-[15rem] h-min
 						shadow-md cursor-pointer py-2 mt-1"
 					>
 						{#each data.subjects as subject}
-							{#if subject.name !== selectedSubject.name}
-								<ListboxOption
-									class="px-3 py-2 text-xs text-slate-800 hover:bg-red-300"
-									value={subject.name}
-								>
-									{subject.name}
-								</ListboxOption>
-							{/if}
+							<ListboxOption
+								class="px-3 py-2 text-xs text-slate-800 hover:bg-red-300"
+								value={subject.name}
+							>
+								{subject.name}
+							</ListboxOption>
 						{/each}
 					</ListboxOptions>
 				</Listbox>

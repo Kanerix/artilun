@@ -12,6 +12,7 @@
     import PaperBody from '../../../components/PaperBody.svelte'
     import { invalidate } from '$app/navigation'
     import TableRow from '../../../components/TableRow.svelte'
+    import Table from '../../../components/Table.svelte';
 
 	export let form: ActionData
 	export let data: PageData
@@ -76,7 +77,7 @@
 		header="Orginization invites"
 	/>
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table>
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['Orginization', 'Action'] as header}
@@ -106,6 +107,6 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 </Paper>

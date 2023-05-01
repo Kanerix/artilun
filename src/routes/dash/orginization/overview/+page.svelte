@@ -16,6 +16,7 @@
     import Fa from 'svelte-fa'
     import { faClose } from '@fortawesome/free-solid-svg-icons'
     import TableRow from '../../../../components/TableRow.svelte'
+    import Table from '../../../../components/Table.svelte';
 
 	export let data: PageData
 	export let form: ActionData
@@ -101,7 +102,7 @@
 <Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader header="Subjects" />
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table class="pt-4 pb-6 px-6 w-full">
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['Name'] as header}
@@ -135,7 +136,7 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 	<PaperBody>
 		<form

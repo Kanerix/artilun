@@ -13,6 +13,7 @@
     import TableHead from '../../../../components/TableHead.svelte'
     import { applyAction, deserialize } from '$app/forms'
     import TableRow from '../../../../components/TableRow.svelte'
+    import Table from '../../../../components/Table.svelte';
 	
 	export let form: ActionData
 	export let data: PageData
@@ -125,7 +126,7 @@
 <Paper class="lg:col-span-6 col-span-12">
 	<PaperHeader header="Invited users" />
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table>
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['Email', 'Action'] as header}
@@ -158,13 +159,13 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 </Paper>
 <Paper class="col-span-12">
 	<PaperHeader header="Users in your orginization" />
 	{#if page}
-		<table class="pt-4 pb-6 px-6 w-full">
+		<Table>
 			<thead {...$$props} class="bg-slate-100 border-y border-slate-200">
 				<TableRow>
 					{#each ['First name', 'Last name', 'Email', 'Role', 'Action'] as header}
@@ -206,6 +207,6 @@
 					</TableRow>
 				{/each}
 			</tbody>
-		</table>
+		</Table>
 	{/if}
 </Paper>
