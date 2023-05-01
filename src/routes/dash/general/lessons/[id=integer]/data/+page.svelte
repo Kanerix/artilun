@@ -29,9 +29,6 @@
 			/>
 			<PaperBody>
 				<div class="flex flex-col">
-					<button on:click={() => console.log(question.ratings)}>
-						test
-					</button>
 					<Bar
 						data={{
 							labels: ['Very bad', 'Bad', 'Mediocre', 'Good', 'Very good'],

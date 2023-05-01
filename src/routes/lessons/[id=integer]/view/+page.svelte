@@ -9,18 +9,6 @@
 	export let data: PageData
 
 	async function sendAnwser(rating: number) {
-		if (questionIndex < data.lesson.questions.length) {
-			questionIndex++
-		} else {
-			questionIndex = 0
-		}
-
-		if (questionIndex == data.lesson.questions.length) {
-			setTimeout(() => {
-				questionIndex = 0
-			}, 1500)
-		}
-
 		const response = await fetch('/api/general/questions/anwser', {
 			method: 'POST',
 			headers: {
@@ -38,9 +26,23 @@
 				duration: 5000,
 			})
 		}
+
+		if (questionIndex < data.lesson.questions.length) {
+			questionIndex++
+		} else {
+			questionIndex = 0
+		}
+
+		if (questionIndex == data.lesson.questions.length) {
+			setTimeout(() => {
+				questionIndex = 0
+			}, 1500)
+		}
+
 	}
 
 	$: questionIndex
+
 </script>
 
 <div class="col-span-12">
