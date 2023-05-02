@@ -135,7 +135,7 @@
 			on:submit|preventDefault={createLesson}
 		>
 			<Input
-				class="col-span-12 lg:col-span-6"
+				class="col-span-12 lg:col-span-6 xl:col-span-7"
 				placeholder="Lesson name"
 				label="lesson name"
 				name="lessonName"
@@ -188,7 +188,7 @@
 					</ListboxOptions>
 				</Listbox>
 			</div>
-			<Button class="col-span-12 lg:col-span-2" label="Create" type="submit" />
+			<Button class="col-span-12 lg:col-span-2 xl:col-span-1" label="Create" type="submit" />
 		</form>
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} class="mt-4" />
