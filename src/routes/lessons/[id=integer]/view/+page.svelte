@@ -2,6 +2,7 @@
 <script lang="ts">
     import toast from 'svelte-french-toast';
     import type { PageData } from './$types';
+    import Button from '../../../../components/Button.svelte';
 
 	let questionIndex: number = 0
 
@@ -51,24 +52,29 @@
 
 </script>
 
-<div class="flex items-center justify-center flex-col w-full">
+<div class="flex items-center justify-around flex-col w-full">
 	{#if questionIndex < data.lesson.questions.length}
 		<h4 class="text-slate-800 text-[1.5rem] text-center font-semibold">
 			{questionIndex + 1}/{data.lesson.questions.length}
 		</h4>		
-		<h1 class="text-slate-800 text-[3rem] text-center font-extrabold">
-			{data.lesson.questions[questionIndex].question}
-		</h1>		
-		<div class="grid gap-4 grid-cols-5 mt-4">
-			{#each [1, 2, 3, 4, 5] as rating}
-			{@const ratingImage = ratingImages[rating - 1]}
-				<button
-					class="w-60 h-60"
-					on:click={() => sendAnwser(rating)}
-				>
-					<img src={ratingImage} alt="rating" />
-				</button>
-			{/each}
+		<div class="w-full">
+			<h1
+				class="text-slate-800 text-center font-extrabold
+				text-[1rem] sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]"
+			>
+				{data.lesson.questions[questionIndex].question}
+			</h1>
+			<div class="flex justify-around items-between mt-6 w-full">
+				{#each [1, 2, 3, 4, 5] as rating}
+				{@const ratingImage = ratingImages[rating - 1]}
+					<button
+						class="w-12 h-12 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-48 lg:h-58 xl:w-60 xl:h-60"
+						on:click={() => sendAnwser(rating)}
+					>
+						<img src={ratingImage} alt="rating" />
+					</button>
+				{/each}
+			</div>
 		</div>
 	{:else}
 		<div>
@@ -80,4 +86,11 @@
 			</h1>
 		</div>
 	{/if}
+	<div>
+		<Button
+			label="End"
+			link
+			href="/dash/general/lessons"
+		/>
+	</div>
 </div>
