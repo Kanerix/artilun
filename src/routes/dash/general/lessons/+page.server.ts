@@ -95,8 +95,6 @@ export const actions = {
 		const data = await event.request.formData()
 		const parseable = Object.fromEntries(data.entries())
 
-		console.log(data)
-		console.log(parseable)
 		const result = lessonSchema.safeParse(parseable)
 		if (!result.success) {
 			return fail(422, {
