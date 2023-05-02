@@ -38,7 +38,6 @@
 				questionIndex = 0
 			}, 1500)
 		}
-
 	}
 
 	$: questionIndex

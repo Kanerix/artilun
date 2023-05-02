@@ -31,10 +31,10 @@
 				<div class="flex flex-col">
 					<Bar
 						data={{
-							labels: ['Very bad', 'Bad', 'Mediocre', 'Good', 'Very good'],
+							labels: Object.keys(question.ratings),
 							datasets: [{
 								label: 'Anwsers',
-								data: question.ratings,
+								data: Object.values(question.ratings),
 								backgroundColor: [
 									'rgba(255, 99, 132, 0.2)',
 								],
@@ -48,7 +48,7 @@
 					/>
 				</div>
 				<div class="text-slate-600 text-sm mt-4">
-					Total anwsers: {question.ratings.length}
+					Total anwsers: {question.ratingsRaw.length}
 				</div>
 			</PaperBody>
 		</Paper>

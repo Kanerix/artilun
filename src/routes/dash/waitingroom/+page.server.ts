@@ -2,6 +2,7 @@ import { z, type ZodIssue } from 'zod'
 import prisma from '$lib/server/prisma'
 import { fail, redirect } from '@sveltejs/kit'
 import type { LayoutServerLoad } from '../$types'
+import redis from '$lib/server/redis'
 
 interface Invite {
 	id: number
@@ -53,6 +54,7 @@ export const actions = {
 		}
 
 		const user = event.locals.user
+		
 		try {
 			const hasUser = Boolean(await prisma.orginizationUser.findFirst({
 				where: {
@@ -89,6 +91,9 @@ export const actions = {
 					}
 				},
 			})
+
+
+			redis.set(`blocked:${user.id}`, '1', 'EX', 900)
 		} catch (e) {
 			console.error(e)
 

@@ -2,9 +2,18 @@ import { redirect } from '@sveltejs/kit'
 import prisma from '$lib/server/prisma'
 import type { PageServerLoad } from './$types'
 
+interface Ratings {
+	'Very bad': number
+	'Bad': number
+	'Mediocre': number
+	'Good': number
+	'Very good': number
+}
+
 interface Question {
 	question: string
-	ratings: number[]
+	ratings: Ratings
+	ratingsRaw: number[]
 }
 
 interface Lesson {
@@ -69,10 +78,36 @@ export const load: PageServerLoad = (async (event): Promise<LoadData> => {
 		if (!questions[anwser.question.id]) {
 			questions[anwser.question.id] = {
 				question: anwser.question.question,
-				ratings: []
+				ratings: {
+					'Very bad': 0,
+					'Bad': 0,
+					'Mediocre': 0,
+					'Good': 0,
+					'Very good': 0
+				},
+				ratingsRaw: []
 			}
 		}
-		questions[anwser.question.id].ratings.push(anwser.rating)
+
+
+		questions[anwser.question.id].ratingsRaw.push(anwser.rating)
+
+		switch (anwser.rating) {
+			case 1:
+				questions[anwser.question.id].ratings['Very bad']++
+				break
+			case 2:
+				questions[anwser.question.id].ratings['Bad']++
+				break
+			case 3:
+				questions[anwser.question.id].ratings['Mediocre']++
+				break
+			case 4:
+				questions[anwser.question.id].ratings['Good']++
+				break
+			case 5:
+				questions[anwser.question.id].ratings['Very good']++
+		}
 	}
 
 	return {
