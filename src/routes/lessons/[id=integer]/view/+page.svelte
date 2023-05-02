@@ -35,7 +35,7 @@
 		if (questionIndex == data.lesson.questions.length) {
 			setTimeout(() => {
 				questionIndex = 0
-			}, 1500)
+			}, 850)
 		}
 	}
 
@@ -72,6 +72,9 @@
 		</div>
 	{:else}
 		<div>
+			<h1 class="text-slate-800 text-[4rem] text-center font-extrabold mb-8">
+				Thank you!
+			</h1>
 			<h1 class="text-slate-800 text-[3rem] text-center font-extrabold">
 				You have finished the lesson evalutaion!
 			</h1>
