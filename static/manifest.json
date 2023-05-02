@@ -37,39 +37,58 @@
 			"sizes": "2922x2962"
 		},
 		{
-			"name": "smiley-very-bad.svg",
-			"src": "/smileys/smiley-very-bad.svg",
-			"type": "image/svg"
+			"name": "small-logo.svg",
+			"src": "/logo.png",
+			"type": "image/svg",
+			"sizes": "any"
+		},
+		{
+			"name": "full-logo.svg",
+			"src": "/full-logo.svg",
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-very-bad.svg",
 			"src": "/smileys/smiley-very-bad.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-very-bad.svg",
 			"src": "/smileys/smiley-very-bad.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
+		},
+		{
+			"name": "smiley-very-bad.svg",
+			"src": "/smileys/smiley-very-bad.svg",
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-bad.svg",
 			"src": "/smileys/smiley-bad.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-mid.svg",
 			"src": "/smileys/smiley-mid.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-good.svg",
 			"src": "/smileys/smiley-good.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
 		},
 		{
 			"name": "smiley-very-good.svg",
 			"src": "/smileys/smiley-very-good.svg",
-			"type": "image/svg"
+			"type": "image/svg",
+			"sizes": "any"
 		}
 	],
 	"screenshots": []
