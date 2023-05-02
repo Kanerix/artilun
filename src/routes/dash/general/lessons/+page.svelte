@@ -78,7 +78,6 @@
 			}
 		)
 	}
-
 </script>
 
 <Paper class="col-span-12">

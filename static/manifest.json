@@ -35,6 +35,41 @@
 			"src": "/itu.jpg",
 			"type": "image/jpg",
 			"sizes": "2922x2962"
+		},
+		{
+			"name": "smiley-very-bad.svg",
+			"src": "/smileys/smiley-very-bad.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-very-bad.svg",
+			"src": "/smileys/smiley-very-bad.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-very-bad.svg",
+			"src": "/smileys/smiley-very-bad.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-bad.svg",
+			"src": "/smileys/smiley-bad.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-mid.svg",
+			"src": "/smileys/smiley-mid.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-good.svg",
+			"src": "/smileys/smiley-good.svg",
+			"type": "image/svg"
+		},
+		{
+			"name": "smiley-very-good.svg",
+			"src": "/smileys/smiley-very-good.svg",
+			"type": "image/svg"
 		}
 	],
 	"screenshots": []
