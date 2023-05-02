@@ -157,7 +157,7 @@
 			>
 			<div class="col-span-4">
 				<h6 class="block w-full text-xs text-slate-600 font-bold uppercase mb-1">
-					Subject
+					Template
 				</h6>
 				<Listbox
 					value={selectedTemplateName}
