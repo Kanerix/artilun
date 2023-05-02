@@ -32,9 +32,10 @@
 	px-6 py-4 min-h-full w-[16rem] bg-white"
 >
 	<div class="flex flex-col">
-		<h1 class="text-sm font-semibold text-slate-500 uppercase my-4">
-			Artilun
-		</h1>
+		<img
+			src="/full-logo.svg"
+			alt="Logo"
+		/>
 		<Divider />
 		<div class="flex items-center bg-slate-100 rounded h-20 my-6 p-3">
 			<div class="flex items-center justify-center bg-slate-200 h-10 w-10 mr-3 rounded-full">

@@ -126,7 +126,7 @@
 			on:submit|preventDefault={createTemplate}
 		>
 			<Input
-				class="col-span-7"
+				class="col-span-12 lg:col-span-6"
 				placeholder="Template name"
 				label="Template name"
 				name="templateName"
@@ -136,7 +136,7 @@
 				name="subjectName"
 				bind:value={selectedSubject}
 			>
-			<div class="col-span-4">
+			<div class="col-span-12 lg:col-span-4">
 				<h6 class="block w-full text-xs text-slate-600 font-bold uppercase mb-1">
 					Subject
 				</h6>
@@ -167,7 +167,7 @@
 					</ListboxOptions>
 				</Listbox>
 			</div>
-			<Button class="col-span-1" label="Create" type="submit" />
+			<Button class="col-span-12 lg:col-span-2" label="Create" type="submit" />
 		</form>
 		{#if form?.issues}
 			<FormError status={$page.status} issues={form.issues} class="mt-4" />

@@ -1,7 +1,6 @@
 
 <script lang="ts">
     import toast from 'svelte-french-toast';
-    import Button from '../../../../components/Button.svelte';
     import type { PageData } from './$types';
 
 	let questionIndex: number = 0
@@ -40,30 +39,34 @@
 		}
 	}
 
+	const ratingImages = [
+		'/smileys/smiley-very-bad.svg',
+		'/smileys/smiley-bad.svg',
+		'/smileys/smiley-mid.svg',
+		'/smileys/smiley-good.svg',
+		'/smileys/smiley-very-good.svg',
+	]
+
 	$: questionIndex
 
 </script>
 
-<div class="col-span-12">
-	<Button
-		link
-		href="/dash/general/lessons" 
-		label="Back"
-	/>
-</div>
-
 <div class="flex items-center justify-center flex-col w-full">
 	{#if questionIndex < data.lesson.questions.length}
+		<h4 class="text-slate-800 text-[1.5rem] text-center font-semibold">
+			{questionIndex + 1}/{data.lesson.questions.length}
+		</h4>		
 		<h1 class="text-slate-800 text-[3rem] text-center font-extrabold">
 			{data.lesson.questions[questionIndex].question}
 		</h1>		
-		<div class="grid gap-2 grid-cols-5 mt-2">
+		<div class="grid gap-4 grid-cols-5 mt-4">
 			{#each [1, 2, 3, 4, 5] as rating}
+			{@const ratingImage = ratingImages[rating - 1]}
 				<button
-					class="w-64 h-64 bg-slate-600"
+					class="w-60 h-60"
 					on:click={() => sendAnwser(rating)}
 				>
-					{rating}
+					<img src={ratingImage} alt="rating" />
 				</button>
 			{/each}
 		</div>
