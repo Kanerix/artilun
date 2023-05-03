@@ -19,7 +19,14 @@
 	export let form: ActionData
 	export let data: PageData
 
-	let selectedTemplate = { ...data.templates[0] }
+	let selectedTemplate = {
+		name: 'Select a template',
+		id: -1,
+		subject: {
+			name: 'Select a subject',
+			id: -1
+		}
+	}
 	let selectedTemplateName: string = selectedTemplate.name
 
 	function createLesson(event: Event) {

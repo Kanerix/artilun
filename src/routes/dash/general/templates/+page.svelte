@@ -19,7 +19,7 @@
 	export let form: ActionData
 	export let data: PageData
 
-	let selectedSubject: string = data.subjects[0].name
+	let selectedSubject: string = "Select subject" 
 
 	function createTemplate(event: Event) {
 		toast.promise(
