@@ -36,10 +36,18 @@
 								label: 'Anwsers',
 								data: Object.values(question.ratings),
 								backgroundColor: [
-									'rgba(255, 99, 132, 0.2)',
+									'rgba(201, 32, 32, 0.2)',
+									'rgba(236, 95, 17, 0.2)',
+									'rgba(238, 210, 27, 0.2)',
+									'rgba(86, 206, 31, 0.2)',
+									'rgba(50, 149, 14, 0.2)',
 								],
 								borderColor: [
-									'rgb(255, 99, 132)',
+									'rgb(201, 32, 32)',
+									'rgb(236, 95, 17)',
+									'rgb(238, 210, 27)',
+									'rgb(86, 206, 31)',
+									'rgb(50, 149, 14)',
 								],
 								borderWidth: 1
 							}]
